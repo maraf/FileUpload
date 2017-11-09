@@ -1,3 +1,95 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+
+<form action="/" method="post">
+    <input id="files" type="file" multiple="multiple" style="display: none;" />
+    <button id="picker">Select Files</button>
+</form>
+
+@section Scripts {
+    <script>
+
+        var Url = "/upload";
+
+        function UploadFile(file, onCompleted, onError, onProgress) {
+            var formData = new FormData();
+            formData.append("file", file, file.name);
+
+            var currentRequest = new XMLHttpRequest();
+            currentRequest.onreadystatechange = function (e) {
+                var request = e.target;
+
+                if (request.readyState == XMLHttpRequest.DONE) {
+                    if (request.status == 200) {
+                        var responseText = currentRequest.responseText;
+                        onCompleted(responseText);
+                    }
+                    else if (onError != null) {
+                        onError(currentRequest.status, currentRequest.statusText);
+                    }
+                }
+            };
+
+            if (onError != null) {
+                currentRequest.onerror = function (e) {
+                    onError(500, e.message)
+                };
+            }
+
+            if (onProgress != null) {
+                currentRequest.upload.onprogress = function (e) {
+                    onProgress(e.loaded, e.total);
+                };
+            }
+
+            currentRequest.open("POST", Url);
+            currentRequest.send(formData);
+        }
+
+        var _$files;
+        var _$picker;
+        var _files = [];
+        var _fileIndex = -1;
+
+        function UploadStep() {
+            _fileIndex++;
+            if (_files.length > _fileIndex) {
+                UploadFile(
+                    _files[_fileIndex],
+                    function (e) {
+                        UploadStep();
+                    },
+                    function (code, message) {
+                        alert(message);
+                        UploadStep();
+                    },
+                    function (e) {
+                        UploadStep();
+                    }
+                );
+            }
+            else {
+                _$files.removeAttr("disabled");
+            }
+        }
+
+        $(function () {
+            _$files = $("#files");
+            _$files.on("change", function (e) {
+                _$files.attr("disabled", "disabled");
+
+                _files = _$files[0].files;
+                _fileIndex = -1;
+                UploadStep();
+            });
+
+            _$picker = $("#picker");
+            _$picker.click(function (e) {
+                _$files.click();
+                e.preventDefault();
+            });
+        });
+
+    </script>
+}
