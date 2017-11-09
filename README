@@ -1,0 +1,35 @@
+Very simple file upload and download ASP.NET Core application.
+
+## Developer notes
+
+Some notes to make development, build and publish easier.
+
+### Publish to Raspberry
+
+```
+dotnet publish -c Release -r linux-arm
+```
+
+### Make ASP.NET Core application a service on Raspberry linux
+
+Create a file at `/lib/systemd/system/{service_name}` and taste a content:
+
+```
+[Unit]
+Description={description} ASP.NET CORE app
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/wwwroot/{path_to_executable}
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+```
+
+After every publish and copy to server, you need to make executable executable:
+
+```
+chmod +x {path_to_executable}
+```
