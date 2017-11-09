@@ -27,7 +27,7 @@ namespace FileUpload.Web.UI.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("/upload")]
         public StatusCodeResult Upload(IFormFile file)
         {
             Ensure.NotNull(file, "file");
