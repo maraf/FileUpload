@@ -1,3 +1,37 @@
 ﻿body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding: 10px;
+}
+
+.up-status {
+    width: 300px;
+    margin-top: 10px;
+}
+
+.up-file-name {
+    margin-bottom: 5px;
+}
+
+.up-file-progress {
+    height: 2px;
+}
+
+.up-file-current .up-file-name {
+    font-weight: bold;
+}
+
+.up-file-done .up-file-name {
+    color: green;
+}
+
+.up-file-current .up-file-progress, .up-file-done .up-file-progress {
+    background-color: green;
+}
+
+.up-file-error .up-file-progress {
+    background-color: red;
+}
+
+.up-file-error .up-file-name {
+    color: red;
 }

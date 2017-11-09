@@ -7,89 +7,91 @@
     <button id="picker">Select Files</button>
 </form>
 
+<div class="up-status">
+
+</div>
+
 @section Scripts {
     <script>
 
         var Url = '@Url.Action("Upload", "Home")';
 
-        function UploadFile(file, onCompleted, onError, onProgress) {
-            var formData = new FormData();
-            formData.append("file", file, file.name);
+        var FileInput;
+        var SelectButton;
+        var Status;
+        var CurrentFiles = [];
+        var CurrentFileIndex = -1;
 
-            var currentRequest = new XMLHttpRequest();
-            currentRequest.onreadystatechange = function (e) {
-                var request = e.target;
+        function RenderFiles() {
+            var content = "";
+            for (var i = 0; i < CurrentFiles.length; i++) {
+                var file = CurrentFiles[i];
 
-                if (request.readyState == XMLHttpRequest.DONE) {
-                    if (request.status == 200) {
-                        var responseText = currentRequest.responseText;
-                        onCompleted(responseText);
-                    }
-                    else if (onError != null) {
-                        onError(currentRequest.status, currentRequest.statusText);
-                    }
-                }
-            };
-
-            if (onError != null) {
-                currentRequest.onerror = function (e) {
-                    onError(500, e.message)
-                };
+                content += ""
+                    + "<div data-file-index='" + i + "' class='up-file'>"
+                        + "<div class='up-file-name'>" + file.name + "</div>"
+                        + "<div class='up-file-progress'></div>"
+                    + "</div>";
             }
 
-            if (onProgress != null) {
-                currentRequest.upload.onprogress = function (e) {
-                    onProgress(e.loaded, e.total);
-                };
-            }
-
-            currentRequest.open("POST", Url);
-            currentRequest.send(formData);
+            Status.innerHTML = content;
         }
 
-        var _$files;
-        var _$picker;
-        var _files = [];
-        var _fileIndex = -1;
-
         function UploadStep() {
-            _fileIndex++;
-            if (_files.length > _fileIndex) {
+            CurrentFileIndex++;
+            if (CurrentFiles.length > CurrentFileIndex) {
+                var progress = null;
+                var container = Status.querySelector("[data-file-index='" + CurrentFileIndex + "']");
+                if (container != null) {
+                    container.classList.add("up-file-current");
+                    progress = container.querySelector(".up-file-progress");
+                }
+
                 UploadFile(
-                    _files[_fileIndex],
+                    CurrentFiles[CurrentFileIndex],
                     function (e) {
+                        if (container != null) {
+                            container.classList.remove("up-file-current");
+                            container.classList.add("up-file-done");
+                        }
                         UploadStep();
                     },
                     function (code, message) {
-                        alert(message);
+                        if (container != null) {
+                            container.classList.remove("up-file-current");
+                            container.classList.add("up-file-error");
+                        }
                         UploadStep();
                     },
-                    function (e) {
-                        UploadStep();
+                    function (loaded, total) {
+                        var percent = 100 / total * loaded;
+                        progress.style.width = percent + "%";
                     }
                 );
             }
             else {
-                _$files.removeAttr("disabled");
+                SelectButton.removeAttribute("disabled");
             }
         }
 
-        $(function () {
-            _$files = $("#files");
-            _$files.on("change", function (e) {
-                _$files.attr("disabled", "disabled");
 
-                _files = _$files[0].files;
-                _fileIndex = -1;
-                UploadStep();
-            });
+        FileInput = document.getElementById("files");
+        FileInput.addEventListener("change", function (e) {
+            SelectButton.setAttribute("disabled", "disabled");
 
-            _$picker = $("#picker");
-            _$picker.click(function (e) {
-                _$files.click();
-                e.preventDefault();
-            });
+            CurrentFiles = FileInput.files;
+            CurrentFileIndex = -1;
+            RenderFiles();
+            UploadStep();
         });
+
+        SelectButton = document.getElementById("picker");
+        SelectButton.addEventListener("click", function (e) {
+            FileInput.click();
+            e.preventDefault();
+        });
+
+        Status = document.querySelector(".up-status");
 
     </script>
 }
