@@ -10,7 +10,7 @@
 @section Scripts {
     <script>
 
-        var Url = "/upload";
+        var Url = '@Url.Action("Upload", "Home")';
 
         function UploadFile(file, onCompleted, onError, onProgress) {
             var formData = new FormData();

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using FileUpload.Web.UI.Models;
 
 namespace FileUpload.Web.UI
 {
@@ -22,6 +23,7 @@ namespace FileUpload.Web.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.Configure<UploadOptions>(Configuration.GetSection("Upload"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
