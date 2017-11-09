@@ -53,7 +53,7 @@ namespace FileUpload.Web.UI.Controllers
             return Ok();
         }
 
-        [HttpGet("/file/{fileName}")]
+        [HttpGet("/{fileName}")]
         public IActionResult Download(string fileName)
         {
             Ensure.NotNull(fileName, "fileName");
@@ -70,7 +70,17 @@ namespace FileUpload.Web.UI.Controllers
 
             string filePath = Path.Combine(configuration.Value.StoragePath, fileName);
             if (System.IO.File.Exists(filePath))
-                return File(new FileStream(filePath, FileMode.Open), "application/octet-stream");
+            {
+                string contentType = "application/octet-stream";
+                if (extension == ".gif")
+                    contentType = "image/gif";
+                else if (extension == ".png")
+                    contentType = "image/png";
+                else if (extension == ".jpg")
+                    contentType = "image/jpg";
+
+                return File(new FileStream(filePath, FileMode.Open), contentType);
+            }
 
             return NotFound();
         }
