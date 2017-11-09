@@ -53,6 +53,28 @@ namespace FileUpload.Web.UI.Controllers
             return Ok();
         }
 
+        [HttpGet("/file/{fileName}")]
+        public IActionResult Download(string fileName)
+        {
+            Ensure.NotNull(fileName, "fileName");
+            if (fileName.Contains(Path.DirectorySeparatorChar) || fileName.Contains(Path.AltDirectorySeparatorChar) || fileName.Contains("..") || Path.IsPathRooted(fileName))
+                NotFound();
+
+            string extension = Path.GetExtension(fileName);
+            if (extension == null)
+                NotFound();
+
+            extension = extension.ToLowerInvariant();
+            if (!configuration.Value.SupportedExtensions.Contains(extension))
+                return NotFound();
+
+            string filePath = Path.Combine(configuration.Value.StoragePath, fileName);
+            if (System.IO.File.Exists(filePath))
+                return File(new FileStream(filePath, FileMode.Open), "application/octet-stream");
+
+            return NotFound();
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
