@@ -19,6 +19,7 @@ namespace FileUpload.Web.UI
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseUrls("http://0.0.0.0:5001")
                 .UseStartup<Startup>()
                 .Build();
     }
