@@ -1,0 +1,53 @@
+﻿$successColor: green;
+$errorColor: red;
+$normalColor: #333;
+
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 10px;
+}
+
+.up-status {
+    width: 300px;
+    margin-top: 10px;
+}
+
+.up-file-name {
+    margin-bottom: 5px;
+}
+
+.up-file-progress {
+    height: 2px;
+}
+
+
+.up-file-current {
+    .up-file-name {
+        font-weight: bold;
+        color: $normalColor;
+    }
+
+    .up-file-progress {
+        background-color: $normalColor;
+    }
+}
+
+.up-file-done {
+    .up-file-name {
+        color: $successColor;
+    }
+
+    .up-file-progress {
+        background-color: $successColor;
+    }
+}
+
+.up-file-error {
+    .up-file-progress {
+        background-color: $errorColor;
+    }
+
+    .up-file-name {
+        color: $errorColor;
+    }
+}
