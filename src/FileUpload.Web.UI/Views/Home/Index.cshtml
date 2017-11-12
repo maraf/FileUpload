@@ -2,7 +2,7 @@
     ViewData["Title"] = "Upload";
 }
 
-<form action="/" method="post">
+<form id="form" action="/" method="post">
     <input id="files" type="file" multiple="multiple" style="display: none;" />
     <button id="picker">Select Files</button>
 </form>
@@ -71,10 +71,12 @@
             }
             else {
                 SelectButton.removeAttribute("disabled");
+                Form.reset();
             }
         }
 
 
+        Form = document.getElementById("form");
         FileInput = document.getElementById("files");
         FileInput.addEventListener("change", function (e) {
             SelectButton.setAttribute("disabled", "disabled");
