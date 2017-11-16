@@ -2,13 +2,20 @@
     ViewData["Title"] = "Upload";
 }
 
-<form id="form" action="/" method="post">
-    <input id="files" type="file" multiple="multiple" style="display: none;" />
-    <button id="picker">Select Files</button>
-</form>
+<div id="container" class="up-container">
+    <img src="~/images/files-lg.svg" width="204" height="52" />
+    <h1>Drag &amp; drop files here</h1>
 
-<div class="up-status">
+    <div class="up-form">
+        <form id="form" action="/" method="post">
+            <input id="files" type="file" multiple="multiple" style="display: none;" />
+            <button id="picker">Select Files</button>
+        </form>
+    </div>
 
+    <div class="up-status">
+
+    </div>
 </div>
 
 @section Scripts {
@@ -31,6 +38,8 @@
                 content += ""
                     + "<div data-file-index='" + i + "' class='up-file'>"
                         + "<div class='up-file-name'>" + file.name + "</div>"
+                        + "<div class='up-file-state'>Waiting</div>"
+                        + "<div class='clear'></div>"
                         + "<div class='up-file-progress'></div>"
                     + "</div>";
             }
@@ -42,10 +51,12 @@
             CurrentFileIndex++;
             if (CurrentFiles.length > CurrentFileIndex) {
                 var progress = null;
+                var state = null;
                 var container = Status.querySelector("[data-file-index='" + CurrentFileIndex + "']");
                 if (container != null) {
                     container.classList.add("up-file-current");
                     progress = container.querySelector(".up-file-progress");
+                    state = container.querySelector(".up-file-state");
                 }
 
                 UploadFile(
@@ -54,6 +65,7 @@
                         if (container != null) {
                             container.classList.remove("up-file-current");
                             container.classList.add("up-file-done");
+                            state.innerHTML = "Done";
                         }
                         UploadStep();
                     },
@@ -61,12 +73,14 @@
                         if (container != null) {
                             container.classList.remove("up-file-current");
                             container.classList.add("up-file-error");
+                            state.innerHTML = "Failed";
                         }
                         UploadStep();
                     },
                     function (loaded, total) {
                         var percent = 100 / total * loaded;
                         progress.style.width = percent + "%";
+                        state.innerHTML = Math.floor(percent) + "%";
                     }
                 );
             }
@@ -77,6 +91,7 @@
         }
 
 
+        Container = document.getElementById("container");
         Form = document.getElementById("form");
         FileInput = document.getElementById("files");
         FileInput.addEventListener("change", function (e) {
@@ -94,7 +109,40 @@
             e.preventDefault();
         });
 
+        Container.addEventListener('drag', function (e) {
+            e.preventDefault();
+        });
+        Container.addEventListener('dragstart', function (e) {
+            e.preventDefault();
+        });
+        Container.addEventListener('dragend', function (e) {
+            e.preventDefault();
+        });
+        Container.addEventListener('dragover', function (e) {
+            e.preventDefault();
+        });
+        Container.addEventListener('dragenter', function (e) {
+            e.preventDefault();
+        });
+        Container.addEventListener('dragleave', function (e) {
+            e.preventDefault();
+        });
+        Container.addEventListener('drop', function (e) {
+            CurrentFiles = e.dataTransfer.files;
+            CurrentFileIndex = -1;
+            RenderFiles();
+            UploadStep();
+
+            e.preventDefault();
+        });
+
         Status = document.querySelector(".up-status");
+
+        if (IsDraggableSupported()) {
+            document.body.classList.add("up-draggable");
+        }
+
+        Container.style.display = 'block';
 
     </script>
 }

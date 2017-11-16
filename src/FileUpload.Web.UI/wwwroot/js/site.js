@@ -34,3 +34,8 @@ function UploadFile(file, onCompleted, onError, onProgress) {
     currentRequest.open("POST", Url);
     currentRequest.send(formData);
 }
+
+function IsDraggableSupported() {
+    var div = document.createElement('div');
+    return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div));
+}
