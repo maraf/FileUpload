@@ -65,11 +65,12 @@ server {
     server_name  {domain1} {domain...};
 
     location / {
-        proxy_pass  http://localhost:{kestrel_port};
+        proxy_pass  http://127.0.0.1:{kestrel_port};
     }
 }
 ```
 
+Note: Sometimes it may be important to use `127.0.0.1` instead of `localhost`.
 To make website enabled, create a symbolic link in `sites-enabled`:
 
 ```
