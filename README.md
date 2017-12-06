@@ -78,3 +78,7 @@ ln -s /etc/nginx/sites-available/{website_name} /etc/nginx/sites-enabled/{websit
 ```
 
 and than restart Nginx.
+
+```
+nginx -s reload
+```
