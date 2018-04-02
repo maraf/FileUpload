@@ -22,7 +22,8 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/wwwroot/{path_to_executable}
+WorkingDirectory=/wwwroot/{path_to_directory}
+ExecStart=/wwwroot/{path_to_directory}/{executable_name}
 Restart=on-abort
 
 [Install]
