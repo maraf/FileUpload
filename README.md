@@ -56,7 +56,7 @@ or
 sudo journalctl -fu {service_name}.service --since "2016-10-18" --until "2016-10-18 04:00"
 ```
 
-### Register an NGINX website as a proxy for ASP.NET Core application in Nginx
+### Register an Nginx website as a proxy for ASP.NET Core application
 
 Create a file in `/etc/nginx/sites-available/{website_name}` and paste a content:
 
