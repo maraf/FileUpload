@@ -11,5 +11,6 @@ namespace FileUpload.Web.UI.Models
         public long MaxLength { get; set; }
         public List<string> SupportedExtensions { get; } = new List<string>();
         public string StoragePath { get; set; }
+        public bool IsOverrideEnabled { get; set; }
     }
 }

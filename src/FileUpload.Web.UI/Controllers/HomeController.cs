@@ -47,6 +47,14 @@ namespace FileUpload.Web.UI.Controllers
                 Directory.CreateDirectory(configuration.Value.StoragePath);
 
             string filePath = Path.Combine(configuration.Value.StoragePath, file.FileName);
+            if (System.IO.File.Exists(filePath))
+            {
+                if (configuration.Value.IsOverrideEnabled)
+                    System.IO.File.Delete(filePath);
+                else
+                    return NotValidUpload();
+            }
+
             using (Stream fileContent = new FileStream(filePath, FileMode.OpenOrCreate))
                 file.CopyTo(fileContent);
 
