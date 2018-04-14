@@ -71,8 +71,8 @@ server {
 }
 ```
 
-Note: Sometimes it may be important to use `127.0.0.1` instead of `localhost`.
-To make website enabled, create a symbolic link in `sites-enabled`:
+> Note: Sometimes it may be important to use `127.0.0.1` instead of `localhost`.
+> To make website enabled, create a symbolic link in `sites-enabled`:
 
 > Note: If you need web sockets (SignalR etc), [see nginx documentation](https://www.nginx.com/blog/websocket-nginx/).
 
