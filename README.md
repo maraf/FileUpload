@@ -74,7 +74,21 @@ server {
 Note: Sometimes it may be important to use `127.0.0.1` instead of `localhost`.
 To make website enabled, create a symbolic link in `sites-enabled`:
 
-Note: If you need web sockets (SignalR etc), [see nginx documentation](https://www.nginx.com/blog/websocket-nginx/).
+> Note: If you need web sockets (SignalR etc), [see nginx documentation](https://www.nginx.com/blog/websocket-nginx/).
+
+Redirect 502 gateway error to some update-like page
+
+```
+error_page 502 /update.html;
+
+location = /update.html {
+    internal;
+    root  /{path_to_directory_with_update.html};
+}
+
+```
+
+Enable site.
 
 ```
 ln -s /etc/nginx/sites-available/{website_name} /etc/nginx/sites-enabled/{website_name}
