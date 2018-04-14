@@ -94,7 +94,7 @@ Enable site.
 ln -s /etc/nginx/sites-available/{website_name} /etc/nginx/sites-enabled/{website_name}
 ```
 
-and than restart Nginx.
+And lastly restart/reload Nginx.
 
 ```
 nginx -s reload
