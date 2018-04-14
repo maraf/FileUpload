@@ -75,7 +75,7 @@ server {
 
 > Note: If you need web sockets (SignalR etc), [see nginx documentation](https://www.nginx.com/blog/websocket-nginx/).
 
-Redirect 502 gateway error to some update-like page
+Redirect 502 gateway error to some update-like page:
 
 ```
 error_page 502 /update.html;
