@@ -72,7 +72,6 @@ server {
 ```
 
 > Note: Sometimes it may be important to use `127.0.0.1` instead of `localhost`.
-> To make website enabled, create a symbolic link in `sites-enabled`:
 
 > Note: If you need web sockets (SignalR etc), [see nginx documentation](https://www.nginx.com/blog/websocket-nginx/).
 
@@ -88,13 +87,13 @@ location = /update.html {
 
 ```
 
-Enable site.
+To make website enabled, create a symbolic link in `sites-enabled`:
 
 ```
 ln -s /etc/nginx/sites-available/{website_name} /etc/nginx/sites-enabled/{website_name}
 ```
 
-And lastly restart/reload Nginx.
+and than restart/reload Nginx.
 
 ```
 nginx -s reload
