@@ -2,7 +2,7 @@
 
 function UploadFile(file, onCompleted, onError, onProgress) {
     var formData = new FormData();
-    formData.append("file", file, file.name);
+    formData.append("file", file, file.customName || file.name);
 
     var currentRequest = new XMLHttpRequest();
     currentRequest.onreadystatechange = function (e) {
@@ -38,4 +38,8 @@ function UploadFile(file, onCompleted, onError, onProgress) {
 function IsDraggableSupported() {
     var div = document.createElement('div');
     return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div));
+}
+
+function IsPasteSupport() {
+    return 'onpaste' in document;
 }

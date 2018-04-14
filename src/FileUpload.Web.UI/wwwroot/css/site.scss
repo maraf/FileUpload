@@ -16,7 +16,7 @@ body {
     display: none;
 }
 
-.up-container h1, .up-container img {
+.up-container h1, .up-container img, .up-container p {
     display: none;
 }
 
@@ -39,6 +39,10 @@ body {
         margin: 0 auto;
     }
 
+    .up-container p {
+        text-align: center;
+    }
+
     .up-form {
         width: 100px;
         margin: 0 auto;
@@ -47,6 +51,7 @@ body {
     .up-form button {
         width: 100%;
         display: block;
+        padding: 6px;
     }
 }
 

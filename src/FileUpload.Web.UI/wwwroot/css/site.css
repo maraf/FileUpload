@@ -9,7 +9,7 @@ body {
 .up-container {
   display: none; }
 
-.up-container h1, .up-container img {
+.up-container h1, .up-container img, .up-container p {
   display: none; }
 
 .up-draggable .up-container {
@@ -27,13 +27,17 @@ body {
   display: block;
   margin: 0 auto; }
 
+.up-draggable .up-container p {
+  text-align: center; }
+
 .up-draggable .up-form {
   width: 100px;
   margin: 0 auto; }
 
 .up-draggable .up-form button {
   width: 100%;
-  display: block; }
+  display: block;
+  padding: 6px; }
 
 .up-status {
   width: 500px;

@@ -5,6 +5,7 @@
 <div id="container" class="up-container">
     <img src="~/images/files-lg.svg" width="204" height="52" />
     <h1>Drag &amp; drop files here</h1>
+    <p class="up-clipboard">or paste them from clipboard</p>
 
     <div class="up-form">
         <form id="form" action="/" method="post">
@@ -37,7 +38,7 @@
 
                 content += ""
                     + "<div data-file-index='" + i + "' class='up-file'>"
-                        + "<div class='up-file-name'>" + file.name + "</div>"
+                        + "<div class='up-file-name'>" + (file.customName || file.name) + "</div>"
                         + "<div class='up-file-state'>Waiting</div>"
                         + "<div class='clear'></div>"
                         + "<div class='up-file-progress'></div>"
@@ -140,6 +141,29 @@
 
         if (IsDraggableSupported()) {
             document.body.classList.add("up-draggable");
+        }
+
+        if (IsPasteSupport()) {
+            document.addEventListener("paste", function (e) {
+                CurrentFiles = e.clipboardData.files;
+                CurrentFileIndex = -1;
+
+                for (var i = 0; i < CurrentFiles.length; i++) {
+                    var file = CurrentFiles[i];
+                    var name = file.name.split(".");
+                    if (name[0] == 'image') {
+                        name[0] = 'file_' + (+new Date);
+                        file.customName = name.join(".");
+                    }
+                }
+
+                RenderFiles();
+                UploadStep();
+
+                e.preventDefault();
+            });
+
+            Container.querySelector(".up-clipboard").style.display = 'block';
         }
 
         Container.style.display = 'block';
