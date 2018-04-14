@@ -75,3 +75,9 @@ body {
 .up-file-error .up-file-progress {
   background-color: red; }
 
+.version {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  opacity: 0.5; }
+

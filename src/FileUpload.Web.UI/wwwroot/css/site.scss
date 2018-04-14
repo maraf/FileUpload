@@ -107,3 +107,10 @@ body {
         background-color: $errorColor;
     }
 }
+
+.version {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    opacity: 0.5;
+}
