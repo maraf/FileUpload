@@ -40,7 +40,6 @@ body {
   padding: 6px; }
 
 .up-status {
-  width: 500px;
   margin: 20px auto 0 auto; }
 
 .up-file {
@@ -97,7 +96,7 @@ body {
   .up-draggable .up-container {
     width: auto;
     margin: 0;
-    padding: 10px 0;
+    padding: 10px;
     border: none; }
     .up-draggable .up-container h1 {
       font-size: 1.5em;
