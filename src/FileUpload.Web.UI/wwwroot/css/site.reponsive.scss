@@ -1,0 +1,46 @@
+﻿@media (max-width: 430px) {
+
+    .up-draggable {
+        .up-container {
+            width: 200px;
+            margin: 10px auto;
+        }
+    }
+}
+
+@media (max-width: 340px) {
+
+    body {
+        min-width: 220px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .up-draggable {
+        .up-container {
+            width: auto;
+            margin: 0;
+            padding: 10px 0;
+            border: none;
+
+            h1 {
+                font-size: 1.5em;
+                margin-bottom: 0;
+            }
+
+            p {
+                margin: 0.5em 0;
+            }
+        }
+    }
+}
+
+@media (max-width: 220px) {
+    .version {
+        position: static;
+        bottom: auto;
+        right: auto;
+        float: right;
+        margin: 5px 5px 0 0;
+    }
+}
