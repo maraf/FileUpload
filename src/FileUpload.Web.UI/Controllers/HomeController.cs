@@ -84,7 +84,7 @@ namespace FileUpload.Web.UI.Controllers
                     contentType = "image/gif";
                 else if (extension == ".png")
                     contentType = "image/png";
-                else if (extension == ".jpg")
+                else if (extension == ".jpg" || extension == ".jpeg")
                     contentType = "image/jpg";
 
                 return File(new FileStream(filePath, FileMode.Open), contentType);
