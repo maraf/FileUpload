@@ -49,6 +49,9 @@ body {
 .up-file-name {
   margin-bottom: 5px;
   float: left; }
+  .up-file-name a {
+    text-decoration: none;
+    color: unset; }
 
 .up-file-state {
   float: right; }

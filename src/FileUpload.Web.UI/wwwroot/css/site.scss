@@ -67,6 +67,11 @@ body {
 .up-file-name {
     margin-bottom: 5px;
     float: left;
+
+    a {
+        text-decoration: none;
+        color: unset;
+    }
 }
 
 .up-file-state {

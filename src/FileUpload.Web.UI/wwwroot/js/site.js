@@ -58,13 +58,19 @@ function Initialize() {
         var content = "";
         for (var i = 0; i < CurrentFiles.length; i++) {
             var file = CurrentFiles[i];
+            var fileName = file.customName || file.name;
+            var fileUrl = window.location.href + fileName;
 
             content += ""
                 + "<div data-file-index='" + i + "' class='up-file'>"
-                + "<div class='up-file-name'>" + (file.customName || file.name) + "</div>"
-                + "<div class='up-file-state'>Waiting</div>"
-                + "<div class='clear'></div>"
-                + "<div class='up-file-progress'></div>"
+                    + "<div class='up-file-name'>"
+                        + "<a href='" + fileUrl + "' target='_blank'>" 
+                            + fileName
+                        + "</a>"
+                    + "</div>"
+                    + "<div class='up-file-state'>Waiting</div>"
+                    + "<div class='clear'></div>"
+                    + "<div class='up-file-progress'></div>"
                 + "</div>";
         }
 
