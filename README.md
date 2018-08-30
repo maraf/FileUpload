@@ -99,6 +99,29 @@ and than restart/reload Nginx.
 nginx -s reload
 ```
 
+### Access log
+
+In service definition add:
+
+```
+server {
+    access_log /var/log/nginx/access_log combined;
+    ...
+}
+```
+
+Then use:
+
+```
+tail -f /var/log/nginx/access_log
+```
+
+OR install utility [ngxtop](https://github.com/lebinh/ngxtop) and use:
+
+```
+ngxtop -f /var/log/nginx/access_log
+```
+
 ### SSL using Let's Encrypt
 
 https://certbot.eff.org/lets-encrypt/pip-nginx
