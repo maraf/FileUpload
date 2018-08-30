@@ -101,7 +101,9 @@ nginx -s reload
 
 ### Access log
 
-In service definition add:
+[Monitor Nginx](https://blog.serverdensity.com/monitor-nginx/)
+
+In website definition add:
 
 ```
 server {
