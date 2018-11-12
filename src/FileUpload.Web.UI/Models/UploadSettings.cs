@@ -13,5 +13,6 @@ namespace FileUpload.Models
         public string StoragePath { get; set; }
         public bool IsOverrideEnabled { get; set; }
         public bool IsDownloadEnabled { get; set; }
+        public bool IsBrowserEnabled { get; set; }
     }
 }

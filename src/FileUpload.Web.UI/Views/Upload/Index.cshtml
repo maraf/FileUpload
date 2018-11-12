@@ -3,29 +3,19 @@
     ViewData["Title"] = "Upload";
 }
 
-<div id="container" class="up-container">
-    <img src="~/images/files-lg.svg" width="204" height="52" />
-    <h1>Drag &amp; drop files here</h1>
-    <p class="up-clipboard">or paste them from clipboard</p>
+<partial name="_UploadForm" />
 
-    <div class="up-form">
-        <form id="form" action="/" method="post">
-            <input id="files" type="file" multiple="multiple" style="display: none;" />
-            <button id="picker">Select Files</button>
-        </form>
-    </div>
+@if (Model.Browser != null)
+{
+    <partial name="_Browser" model="@Model.Browser" />
+}
 
-    <div class="up-status">
-
-    </div>
-</div>
-
-<div class="version">@("v" + typeof(UploadOptions).Assembly.GetName().Version.ToString(3))</div>
+<div class="version">@Model.AppVersion</div>
 
 @section Scripts {
 <script>
 
-    var Url = '/@Model.UploadUrl';
+    var Url = '@Model.UploadUrl';
     Initialize();
 
 </script>

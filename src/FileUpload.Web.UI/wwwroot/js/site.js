@@ -59,18 +59,19 @@ function Initialize() {
         for (var i = 0; i < CurrentFiles.length; i++) {
             var file = CurrentFiles[i];
             var fileName = file.customName || file.name;
-            var fileUrl = window.location.href + fileName;
+            var currentLocation = window.location.href;
+            var fileUrl = currentLocation + (currentLocation[currentLocation.length - 1] == '/' ? '' : '/') + fileName;
 
             content += ""
-                + "<div data-file-index='" + i + "' class='up-file'>"
-                    + "<div class='up-file-name'>"
+                + "<div data-file-index='" + i + "' class='file'>"
+                    + "<div class='file-name'>"
                         + "<a href='" + fileUrl + "' target='_blank'>" 
                             + fileName
                         + "</a>"
                     + "</div>"
-                    + "<div class='up-file-state'>Waiting</div>"
+                    + "<div class='file-state'>Waiting</div>"
                     + "<div class='clear'></div>"
-                    + "<div class='up-file-progress'></div>"
+                    + "<div class='file-progress'></div>"
                 + "</div>";
         }
 
@@ -84,25 +85,25 @@ function Initialize() {
             var state = null;
             var container = Status.querySelector("[data-file-index='" + CurrentFileIndex + "']");
             if (container != null) {
-                container.classList.add("up-file-current");
-                progress = container.querySelector(".up-file-progress");
-                state = container.querySelector(".up-file-state");
+                container.classList.add("file-current");
+                progress = container.querySelector(".file-progress");
+                state = container.querySelector(".file-state");
             }
 
             UploadFile(
                 CurrentFiles[CurrentFileIndex],
                 function (e) {
                     if (container != null) {
-                        container.classList.remove("up-file-current");
-                        container.classList.add("up-file-done");
+                        container.classList.remove("file-current");
+                        container.classList.add("file-done");
                         state.innerHTML = "Done";
                     }
                     UploadStep();
                 },
                 function (code, message) {
                     if (container != null) {
-                        container.classList.remove("up-file-current");
-                        container.classList.add("up-file-error");
+                        container.classList.remove("file-current");
+                        container.classList.add("file-error");
                         state.innerHTML = "Failed";
                     }
                     UploadStep();
@@ -121,7 +122,7 @@ function Initialize() {
     }
 
 
-    Container = document.getElementById("container");
+    Container = document.getElementById("upload-container");
     Form = document.getElementById("form");
     FileInput = document.getElementById("files");
     FileInput.addEventListener("change", function (e) {
@@ -166,10 +167,10 @@ function Initialize() {
         e.preventDefault();
     });
 
-    Status = document.querySelector(".up-status");
+    Status = document.querySelector(".status");
 
     if (IsDraggableSupported()) {
-        document.body.classList.add("up-draggable");
+        document.body.classList.add("draggable");
     }
 
     if (IsPasteSupport()) {
@@ -198,7 +199,7 @@ function Initialize() {
             e.preventDefault();
         });
 
-        Container.querySelector(".up-clipboard").style.display = 'block';
+        Container.querySelector(".clipboard").classList.add('available');
     }
 
     Container.style.display = 'block';

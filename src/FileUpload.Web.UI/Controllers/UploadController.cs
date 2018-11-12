@@ -41,11 +41,25 @@ namespace FileUpload.Controllers
             return uploadUrl;
         }
 
+        private string GetAppVersion()
+            => "v" + typeof(UploadOptions).Assembly.GetName().Version.ToString(3);
+
         [Route("")]
         public IActionResult Index()
         {
             string uploadUrl = GetActionUrl("upload");
-            return View(new IndexViewModel() { UploadUrl = uploadUrl });
+            return View(new IndexViewModel(GetAppVersion(), uploadUrl, CreateBrowser()));
+        }
+
+        [Route("browse")]
+        [HttpGet]
+        public IActionResult Browse()
+        {
+            BrowseViewModel model = CreateBrowser();
+            if (model == null)
+                return NotFound();
+
+            return View(model);
         }
 
         [Route("upload")]
@@ -123,11 +137,11 @@ namespace FileUpload.Controllers
             return NotFound();
         }
 
-        [Route("browse")]
-        [HttpGet]
-        public IActionResult Browse()
+        private BrowseViewModel CreateBrowser()
         {
             UploadSettings configuration = service.Find(RouteData, User);
+            if (!configuration.IsDownloadEnabled)
+                return null;
 
             List<FileViewModel> files = Directory
                 .EnumerateFiles(configuration.StoragePath)
@@ -135,7 +149,7 @@ namespace FileUpload.Controllers
                 .Select(f => new FileViewModel(Path.GetFileName(f), new FileInfo(f).Length))
                 .ToList();
 
-            return View(new BrowseViewModel(files, GetActionUrl("index")));
+            return new BrowseViewModel(files, GetActionUrl("index"));
         }
 
         [HttpGet("/error")]

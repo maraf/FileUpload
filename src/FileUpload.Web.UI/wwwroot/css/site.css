@@ -6,75 +6,74 @@ body {
   color: #686868;
   padding: 10px; }
 
-.up-container {
+.container-draggable-only {
   display: none; }
+  .container-draggable-only h1, .container-draggable-only img, .container-draggable-only p {
+    display: none; }
 
-.up-container h1, .up-container img, .up-container p {
-  display: none; }
-
-.up-draggable .up-container {
+.draggable .container {
   margin: 50px;
   padding: 50px;
   border: 1px dotted #686868;
   border-radius: 5px;
   background: #FAFBFC; }
 
-.up-draggable .up-container h1 {
+.draggable .upload h1 {
   display: block;
   text-align: center; }
 
-.up-draggable .up-container img {
+.draggable .upload img {
   display: block;
   margin: 0 auto; }
 
-.up-draggable .up-container p {
+.draggable .upload p {
   text-align: center; }
 
-.up-draggable .up-form {
+.draggable .upload .form {
   width: 100px;
   margin: 0 auto; }
 
-.up-draggable .up-form button {
+.draggable .upload .form button {
   width: 100%;
   display: block;
   padding: 6px; }
 
-.up-status {
+.draggable .upload .status {
   margin: 20px auto 0 auto; }
 
-.up-file {
+.draggable .upload .file {
   margin-bottom: 10px; }
 
-.up-file-name {
+.draggable .upload .file-name {
   margin-bottom: 5px;
   float: left; }
-  .up-file-name a {
+  .draggable .upload .file-name a {
     text-decoration: none;
     color: unset; }
 
-.up-file-state {
+.file-state {
   float: right; }
 
-.up-file-progress {
+.file-progress {
   height: 2px; }
 
-.up-file-current .up-file-name, .up-file-current .up-file-state {
+.file-current .file-name, .file-current .file-state {
   font-weight: bold;
   color: #686868; }
 
-.up-file-current .up-file-progress {
+.file-current .file-progress {
   background-color: #686868; }
 
-.up-file-done .up-file-name, .up-file-done .up-file-state {
+.file-done .file-name, .file-done .file-state {
   color: green; }
 
-.up-file-done .up-file-progress {
+.file-done .file-progress {
   background-color: green; }
 
-.up-file-error .up-file-name, .up-file-error .up-file-state {
+.file-error .file-name, .file-error .file-state {
   color: red; }
 
-.up-file-error .up-file-progress {
+.file-error .file-progress {
   background-color: red; }
 
 .version {
@@ -84,19 +83,29 @@ body {
   opacity: 0.5; }
 
 .browser table {
+  width: 100%;
   border-spacing: unset; }
   .browser table th, .browser table td {
-    padding: 4px 8px;
+    padding: 8px 16px;
     border-bottom: 1px solid #ddd; }
   .browser table th {
     text-align: left;
-    background: #ddd;
     border-bottom: 1px solid #686868; }
   .browser table tr:nth-child(2n + 1) td {
-    background: #eee; }
+    background: #f8f8f8; }
+
+.browser .file-name {
+  min-width: 194px; }
+
+.browser .file-size {
+  width: 70px; }
+
+@media (max-width: 560px) {
+  .browser .file-size {
+    display: none; } }
 
 @media (max-width: 430px) {
-  .up-draggable .up-container {
+  .draggable .container {
     width: 200px;
     margin: 10px auto; } }
 
@@ -105,15 +114,15 @@ body {
     min-width: 220px;
     margin: 0;
     padding: 0; }
-  .up-draggable .up-container {
+  .draggable .container {
     width: auto;
     margin: 0;
     padding: 10px;
     border: none; }
-    .up-draggable .up-container h1 {
+    .draggable .container h1 {
       font-size: 1.5em;
       margin-bottom: 0; }
-    .up-draggable .up-container p {
+    .draggable .container p {
       margin: 0.5em 0; } }
 
 @media (max-width: 220px) {

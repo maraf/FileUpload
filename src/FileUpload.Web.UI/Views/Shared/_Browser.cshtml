@@ -1,0 +1,21 @@
+﻿@model BrowseViewModel
+
+<div class="container browser">
+    <table>
+        <tr>
+            <th class="file-name">Name</th>
+            <th class="file-size">Size</th>
+        </tr>
+        @foreach (var file in Model.Files)
+        {
+            <tr>
+                <td class="file-name">
+                    <a href="@Model.GetFileUrl(file)" target="_blank">@file.Name</a>
+                </td>
+                <td class="file-size">
+                    @file.Size B
+                </td>
+            </tr>
+        }
+    </table>
+</div>

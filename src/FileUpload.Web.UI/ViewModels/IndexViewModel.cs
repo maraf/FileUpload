@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Neptuo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,18 @@ namespace FileUpload.ViewModels
 {
     public class IndexViewModel
     {
-        public string UploadUrl { get; set; }
+        public string AppVersion { get; }
+        public string UploadUrl { get; }
+
+        public BrowseViewModel Browser { get; }
+
+        public IndexViewModel(string appVersion, string uploadUrl, BrowseViewModel browser = null)
+        {
+            Ensure.NotNull(appVersion, "appVersion");
+            Ensure.NotNull(uploadUrl, "uploadUrl");
+            AppVersion = appVersion;
+            UploadUrl = uploadUrl;
+            Browser = browser;
+        }
     }
 }

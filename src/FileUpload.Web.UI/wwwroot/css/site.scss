@@ -12,16 +12,16 @@ body {
     padding: 10px;
 }
 
-.up-container {
+.container-draggable-only {
     display: none;
+
+    h1, img, p {
+        display: none;
+    }
 }
 
-.up-container h1, .up-container img, .up-container p {
-    display: none;
-}
-
-.up-draggable {
-    .up-container {
+.draggable {
+    .container {
         margin: 50px;
         padding: 50px;
         border: 1px dotted $normalColor;
@@ -29,85 +29,88 @@ body {
         background: #FAFBFC;
     }
 
-    .up-container h1 {
-        display: block;
-        text-align: center;
-    }
+    .upload {
 
-    .up-container img {
-        display: block;
-        margin: 0 auto;
-    }
+        h1 {
+            display: block;
+            text-align: center;
+        }
 
-    .up-container p {
-        text-align: center;
-    }
+        img {
+            display: block;
+            margin: 0 auto;
+        }
 
-    .up-form {
-        width: 100px;
-        margin: 0 auto;
-    }
+        p {
+            text-align: center;
+        }
 
-    .up-form button {
-        width: 100%;
-        display: block;
-        padding: 6px;
+        .form {
+            width: 100px;
+            margin: 0 auto;
+        }
+
+        .form button {
+            width: 100%;
+            display: block;
+            padding: 6px;
+        }
+
+        .status {
+            margin: 20px auto 0 auto;
+        }
+
+        .file {
+            margin-bottom: 10px;
+        }
+
+        .file-name {
+            margin-bottom: 5px;
+            float: left;
+
+            a {
+                text-decoration: none;
+                color: unset;
+            }
+        }
     }
 }
 
-.up-status {
-    margin: 20px auto 0 auto;
-}
-
-.up-file {
-    margin-bottom: 10px;
-}
-
-.up-file-name {
-    margin-bottom: 5px;
-    float: left;
-
-    a {
-        text-decoration: none;
-        color: unset;
-    }
-}
-
-.up-file-state {
+.file-state {
     float: right;
 }
 
-.up-file-progress {
+.file-progress {
     height: 2px;
 }
 
-.up-file-current {
-    .up-file-name, .up-file-state {
+.file-current {
+    .file-name, .file-state {
         font-weight: bold;
         color: $normalColor;
     }
 
-    .up-file-progress {
+    .file-progress {
         background-color: $normalColor;
     }
 }
 
-.up-file-done {
-    .up-file-name, .up-file-state {
+.file-done {
+    .file-name, .file-state {
         color: $successColor;
     }
 
-    .up-file-progress {
+    .file-progress {
         background-color: $successColor;
     }
 }
 
-.up-file-error {
-    .up-file-name, .up-file-state {
+.file-error {
+    .file-name, .file-state {
         color: $errorColor;
     }
 
-    .up-file-progress {
+    .file-progress {
         background-color: $errorColor;
     }
 }
@@ -121,22 +124,30 @@ body {
 
 .browser {
     table {
+        width: 100%;
         border-spacing: unset;
 
         th, td {
-            padding: 4px 8px;
+            padding: 8px 16px;
             border-bottom: 1px solid #ddd;
         }
 
         th {
             text-align: left;
-            background: #ddd;
             border-bottom: 1px solid #686868;
         }
 
         tr:nth-child(2n + 1) td {
-            background: #eee;
+            background: #f8f8f8;
         }
+    }
+
+    .file-name {
+        min-width: 194px;
+    }
+
+    .file-size {
+        width: 70px;
     }
 }
 

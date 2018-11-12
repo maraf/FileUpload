@@ -1,7 +1,17 @@
-﻿@media (max-width: 430px) {
+﻿@media (max-width: 560px) {
 
-    .up-draggable {
-        .up-container {
+    .browser {
+        .file-size {
+            display: none;
+        }
+    }
+
+}
+
+@media (max-width: 430px) {
+
+    .draggable {
+        .container {
             width: 200px;
             margin: 10px auto;
         }
@@ -16,8 +26,8 @@
         padding: 0;
     }
 
-    .up-draggable {
-        .up-container {
+    .draggable {
+        .container {
             width: auto;
             margin: 0;
             padding: 10px;
