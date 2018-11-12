@@ -66,14 +66,14 @@ namespace FileUpload.Web.UI.Controllers
         {
             Ensure.NotNull(fileName, "fileName");
             if (!configuration.Value.IsDownloadEnabled)
-                Unauthorized();
+                return Unauthorized();
 
             if (fileName.Contains(Path.DirectorySeparatorChar) || fileName.Contains(Path.AltDirectorySeparatorChar) || fileName.Contains("..") || Path.IsPathRooted(fileName))
-                NotFound();
+                return NotFound();
 
             string extension = Path.GetExtension(fileName);
             if (extension == null)
-                NotFound();
+                return NotFound();
 
             extension = extension.ToLowerInvariant();
             if (!configuration.Value.SupportedExtensions.Contains(extension))
