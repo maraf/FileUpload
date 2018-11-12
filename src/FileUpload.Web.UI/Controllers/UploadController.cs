@@ -1,6 +1,6 @@
-﻿using FileUpload.Web.UI.Models;
-using FileUpload.Web.UI.Services;
-using FileUpload.Web.UI.ViewModels;
+﻿using FileUpload.Models;
+using FileUpload.Services;
+using FileUpload.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -12,7 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FileUpload.Web.UI.Controllers
+namespace FileUpload.Controllers
 {
     [Route("")]
     [Route("{urltoken:regex([[a-zA-Z0-9]]+)}")]
@@ -45,7 +45,7 @@ namespace FileUpload.Web.UI.Controllers
         public IActionResult Index()
         {
             string uploadUrl = GetActionUrl("upload");
-            return View(new UploadIndexViewModel() { UploadUrl = uploadUrl });
+            return View(new IndexViewModel() { UploadUrl = uploadUrl });
         }
 
         [Route("upload")]
@@ -135,7 +135,7 @@ namespace FileUpload.Web.UI.Controllers
                 .Select(f => new FileViewModel(Path.GetFileName(f), new FileInfo(f).Length))
                 .ToList();
 
-            return View(new UploadBrowseViewModel(files, GetActionUrl("index")));
+            return View(new BrowseViewModel(files, GetActionUrl("index")));
         }
 
         [HttpGet("/error")]

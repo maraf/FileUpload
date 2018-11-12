@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileUpload.Web.UI.ViewModels
+namespace FileUpload.ViewModels
 {
     public class FileViewModel
     {

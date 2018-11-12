@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileUpload.Web.UI.ViewModels
+namespace FileUpload.ViewModels
 {
-    public class UploadBrowseViewModel
+    public class BrowseViewModel
     {
         private readonly string downloadUrl;
 
         public IReadOnlyList<FileViewModel> Files { get; }
 
-        public UploadBrowseViewModel(List<FileViewModel> fileNames, string downloadUrl)
+        public BrowseViewModel(List<FileViewModel> fileNames, string downloadUrl)
         {
             Ensure.NotNull(fileNames, "fileNames");
             Ensure.NotNull(downloadUrl, "downloadUrl");

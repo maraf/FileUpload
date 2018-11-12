@@ -1,4 +1,4 @@
-﻿using FileUpload.Web.UI.Models;
+﻿using FileUpload.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Options;
@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileUpload.Web.UI.Services
+namespace FileUpload.Services
 {
     public class UploadSettingsService
     {

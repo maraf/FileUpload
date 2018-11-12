@@ -9,6 +9,7 @@
     <Product>FileUpload</Product>
     <RepositoryUrl>https://github.com/maraf/FileUpload</RepositoryUrl>
     <PackageProjectUrl>https://github.com/maraf/FileUpload</PackageProjectUrl>
+    <RootNamespace>FileUpload</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

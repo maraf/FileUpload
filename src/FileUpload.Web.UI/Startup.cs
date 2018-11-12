@@ -1,5 +1,5 @@
-﻿using FileUpload.Web.UI.Models;
-using FileUpload.Web.UI.Services;
+﻿using FileUpload.Models;
+using FileUpload.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FileUpload.Web.UI
+namespace FileUpload
 {
     public class Startup
     {

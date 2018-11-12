@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileUpload.Web.UI.Models
+namespace FileUpload.Models
 {
     public class UploadOptions
     {

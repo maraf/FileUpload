@@ -1,6 +1,6 @@
 using System;
 
-namespace FileUpload.Web.UI.Models
+namespace FileUpload.Models
 {
     public class ErrorViewModel
     {
