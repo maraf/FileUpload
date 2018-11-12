@@ -1,8 +1,10 @@
 ﻿using FileUpload.Web.UI.Models;
+using FileUpload.Web.UI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,7 @@ namespace FileUpload.Web.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddTransient<UploadSettingsService>();
             services.Configure<UploadOptions>(Configuration.GetSection("Upload"));
         }
 
@@ -32,17 +35,11 @@ namespace FileUpload.Web.UI
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
             else
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/error");
 
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}"
-                );
-            });
+            app.UseMvc();
         }
     }
 }

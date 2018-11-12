@@ -8,10 +8,15 @@ namespace FileUpload.Web.UI.Models
 {
     public class UploadOptions
     {
-        public long MaxLength { get; set; }
-        public List<string> SupportedExtensions { get; } = new List<string>();
-        public string StoragePath { get; set; }
-        public bool IsOverrideEnabled { get; set; }
-        public bool IsDownloadEnabled { get; set; }
+        public UploadSettings Default { get; set; }
+        public Dictionary<string, UploadSettings> Profiles { get; } = new Dictionary<string, UploadSettings>();
+
+        public UploadSettings Find(string role)
+        {
+            if (role != null && Profiles.TryGetValue(role, out var settings))
+                return settings;
+
+            return Default;
+        }
     }
 }

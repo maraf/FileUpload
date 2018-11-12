@@ -1,4 +1,6 @@
 ﻿using FileUpload.Web.UI.Models;
+using FileUpload.Web.UI.Services;
+using FileUpload.Web.UI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -12,27 +14,39 @@ using System.Threading.Tasks;
 
 namespace FileUpload.Web.UI.Controllers
 {
-    public class HomeController : Controller
+    [Route("")]
+    [Route("{urltoken:regex([[a-zA-Z0-9]]+)}")]
+    public class UploadController : Controller
     {
-        private readonly IOptions<UploadOptions> configuration;
+        private readonly UploadSettingsService service;
 
-        public HomeController(IOptions<UploadOptions> configuration)
+        public UploadController(UploadSettingsService service)
         {
-            Ensure.NotNull(configuration, "configuration");
-            this.configuration = configuration;
+            Ensure.NotNull(service, "service");
+            this.service = service;
         }
 
+        [Route("")]
         public IActionResult Index()
         {
-            return View();
+            string uploadUrl = null;
+            string urlToken = service.FindUrlToken(RouteData);
+            if (String.IsNullOrEmpty(urlToken))
+                uploadUrl = Url.Action("Upload", "Upload");
+            else
+                uploadUrl = $"/{urlToken}/upload";
+
+            return View(new UploadIndexViewModel() { UploadUrl = uploadUrl });
         }
 
-        [HttpPost("/upload")]
+        [Route("upload")]
+        [HttpPost]
         public StatusCodeResult Upload(IFormFile file)
         {
             Ensure.NotNull(file, "file");
+            UploadSettings configuration = service.Find(RouteData, User);
 
-            if (file.Length > configuration.Value.MaxLength)
+            if (file.Length > configuration.MaxLength)
                 return NotValidUpload();
 
             string extension = Path.GetExtension(file.FileName);
@@ -40,16 +54,16 @@ namespace FileUpload.Web.UI.Controllers
                 return NotValidUpload();
 
             extension = extension.ToLowerInvariant();
-            if (!configuration.Value.SupportedExtensions.Contains(extension))
+            if (!configuration.SupportedExtensions.Contains(extension))
                 return NotValidUpload();
 
-            if (!Directory.Exists(configuration.Value.StoragePath))
-                Directory.CreateDirectory(configuration.Value.StoragePath);
+            if (!Directory.Exists(configuration.StoragePath))
+                Directory.CreateDirectory(configuration.StoragePath);
 
-            string filePath = Path.Combine(configuration.Value.StoragePath, file.FileName);
+            string filePath = Path.Combine(configuration.StoragePath, file.FileName);
             if (System.IO.File.Exists(filePath))
             {
-                if (configuration.Value.IsOverrideEnabled)
+                if (configuration.IsOverrideEnabled)
                     System.IO.File.Delete(filePath);
                 else
                     return NotValidUpload();
@@ -61,25 +75,28 @@ namespace FileUpload.Web.UI.Controllers
             return Ok();
         }
 
-        [HttpGet("/{fileName}")]
-        public IActionResult Download(string fileName)
+        [Route("{fileName}.{extension}")]
+        [HttpGet]
+        public IActionResult Download(string fileName, string extension)
         {
             Ensure.NotNull(fileName, "fileName");
-            if (!configuration.Value.IsDownloadEnabled)
+            UploadSettings configuration = service.Find(RouteData, User);
+
+            if (!configuration.IsDownloadEnabled)
                 return Unauthorized();
 
+            fileName = $"{fileName}.{extension}";
             if (fileName.Contains(Path.DirectorySeparatorChar) || fileName.Contains(Path.AltDirectorySeparatorChar) || fileName.Contains("..") || Path.IsPathRooted(fileName))
                 return NotFound();
 
-            string extension = Path.GetExtension(fileName);
             if (extension == null)
                 return NotFound();
 
             extension = extension.ToLowerInvariant();
-            if (!configuration.Value.SupportedExtensions.Contains(extension))
+            if (!configuration.SupportedExtensions.Contains(extension))
                 return NotFound();
 
-            string filePath = Path.Combine(configuration.Value.StoragePath, fileName);
+            string filePath = Path.Combine(configuration.StoragePath, fileName);
             if (System.IO.File.Exists(filePath))
             {
                 string contentType = "application/octet-stream";
@@ -96,6 +113,7 @@ namespace FileUpload.Web.UI.Controllers
             return NotFound();
         }
 
+        [HttpGet("/error")]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

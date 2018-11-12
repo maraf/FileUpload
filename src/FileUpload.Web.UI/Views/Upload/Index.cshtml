@@ -1,6 +1,9 @@
-﻿@{
+﻿@model FileUpload.Web.UI.ViewModels.UploadIndexViewModel
+@{
     ViewData["Title"] = "Upload";
 }
+
+@Model.UploadUrl
 
 <div id="container" class="up-container">
     <img src="~/images/files-lg.svg" width="204" height="52" />
@@ -22,10 +25,10 @@
 <div class="version">@("v" + typeof(UploadOptions).Assembly.GetName().Version.ToString(3))</div>
 
 @section Scripts {
-    <script>
+<script>
 
-        var Url = '@Url.Action("Upload", "Home")';
-        Initialize();
+    var Url = '/@Model.UploadUrl';
+    Initialize();
 
-    </script>
+</script>
 }
