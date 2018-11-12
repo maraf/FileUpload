@@ -12,5 +12,6 @@ namespace FileUpload.Web.UI.Models
         public List<string> SupportedExtensions { get; } = new List<string>();
         public string StoragePath { get; set; }
         public bool IsOverrideEnabled { get; set; }
+        public bool IsDownloadEnabled { get; set; }
     }
 }

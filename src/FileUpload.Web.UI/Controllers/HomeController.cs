@@ -65,6 +65,9 @@ namespace FileUpload.Web.UI.Controllers
         public IActionResult Download(string fileName)
         {
             Ensure.NotNull(fileName, "fileName");
+            if (!configuration.Value.IsDownloadEnabled)
+                Unauthorized();
+
             if (fileName.Contains(Path.DirectorySeparatorChar) || fileName.Contains(Path.AltDirectorySeparatorChar) || fileName.Contains("..") || Path.IsPathRooted(fileName))
                 NotFound();
 
