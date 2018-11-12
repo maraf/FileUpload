@@ -119,4 +119,25 @@ body {
     opacity: 0.5;
 }
 
-@import "site.reponsive"
+.browser {
+    table {
+        border-spacing: unset;
+
+        th, td {
+            padding: 4px 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            text-align: left;
+            background: #ddd;
+            border-bottom: 1px solid #686868;
+        }
+
+        tr:nth-child(2n + 1) td {
+            background: #eee;
+        }
+    }
+}
+
+@import "site.reponsive";

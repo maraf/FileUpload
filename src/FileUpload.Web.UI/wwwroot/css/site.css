@@ -83,6 +83,18 @@ body {
   right: 10px;
   opacity: 0.5; }
 
+.browser table {
+  border-spacing: unset; }
+  .browser table th, .browser table td {
+    padding: 4px 8px;
+    border-bottom: 1px solid #ddd; }
+  .browser table th {
+    text-align: left;
+    background: #ddd;
+    border-bottom: 1px solid #686868; }
+  .browser table tr:nth-child(2n + 1) td {
+    background: #eee; }
+
 @media (max-width: 430px) {
   .up-draggable .up-container {
     width: 200px;
@@ -111,4 +123,3 @@ body {
     right: auto;
     float: right;
     margin: 5px 5px 0 0; } }
-

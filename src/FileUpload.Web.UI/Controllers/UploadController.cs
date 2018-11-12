@@ -26,16 +26,25 @@ namespace FileUpload.Web.UI.Controllers
             this.service = service;
         }
 
-        [Route("")]
-        public IActionResult Index()
+        // Because with want URLs both with and wihout UrlToken and ASP.NET can't generate such (it places UrlToken as a QueryString parameter).
+        private string GetActionUrl(string actionName)
         {
             string uploadUrl = null;
             string urlToken = service.FindUrlToken(RouteData);
             if (String.IsNullOrEmpty(urlToken))
-                uploadUrl = Url.Action("Upload", "Upload");
+                uploadUrl = Url.Action(actionName, "Upload");
+            else if (actionName != "index")
+                uploadUrl = $"/{urlToken}/{actionName}";
             else
-                uploadUrl = $"/{urlToken}/upload";
+                uploadUrl = $"/{urlToken}";
 
+            return uploadUrl;
+        }
+
+        [Route("")]
+        public IActionResult Index()
+        {
+            string uploadUrl = GetActionUrl("upload");
             return View(new UploadIndexViewModel() { UploadUrl = uploadUrl });
         }
 
@@ -85,11 +94,12 @@ namespace FileUpload.Web.UI.Controllers
             if (!configuration.IsDownloadEnabled)
                 return Unauthorized();
 
-            fileName = $"{fileName}.{extension}";
-            if (fileName.Contains(Path.DirectorySeparatorChar) || fileName.Contains(Path.AltDirectorySeparatorChar) || fileName.Contains("..") || Path.IsPathRooted(fileName))
+            if (extension == null)
                 return NotFound();
 
-            if (extension == null)
+            extension = "." + extension;
+            fileName = fileName + extension;
+            if (fileName.Contains(Path.DirectorySeparatorChar) || fileName.Contains(Path.AltDirectorySeparatorChar) || fileName.Contains("..") || Path.IsPathRooted(fileName))
                 return NotFound();
 
             extension = extension.ToLowerInvariant();
@@ -111,6 +121,21 @@ namespace FileUpload.Web.UI.Controllers
             }
 
             return NotFound();
+        }
+
+        [Route("browse")]
+        [HttpGet]
+        public IActionResult Browse()
+        {
+            UploadSettings configuration = service.Find(RouteData, User);
+
+            List<FileViewModel> files = Directory
+                .EnumerateFiles(configuration.StoragePath)
+                .Where(f => configuration.SupportedExtensions.Contains(Path.GetExtension(f).ToLowerInvariant()))
+                .Select(f => new FileViewModel(Path.GetFileName(f), new FileInfo(f).Length))
+                .ToList();
+
+            return View(new UploadBrowseViewModel(files, GetActionUrl("index")));
         }
 
         [HttpGet("/error")]
