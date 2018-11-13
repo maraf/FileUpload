@@ -170,7 +170,7 @@ function Initialize() {
     Status = document.querySelector(".status");
 
     if (IsDraggableSupported()) {
-        document.body.classList.add("draggable");
+        document.body.classList.add("dragdrop-supported");
     }
 
     if (IsPasteSupport()) {
@@ -199,7 +199,7 @@ function Initialize() {
             e.preventDefault();
         });
 
-        Container.querySelector(".clipboard").classList.add('available');
+        document.body.classList.add('clipboard-supported');
     }
 
     Container.style.display = 'block';

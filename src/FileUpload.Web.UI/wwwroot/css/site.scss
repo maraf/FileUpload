@@ -12,7 +12,15 @@ body {
     padding: 10px;
 }
 
-.container-draggable-only {
+.container {
+    margin: 50px;
+    padding: 50px;
+    border: 1px dotted $normalColor;
+    border-radius: 5px;
+    background: #FAFBFC;
+}
+
+.upload {
     display: none;
 
     h1, img, p {
@@ -20,14 +28,7 @@ body {
     }
 }
 
-.draggable {
-    .container {
-        margin: 50px;
-        padding: 50px;
-        border: 1px dotted $normalColor;
-        border-radius: 5px;
-        background: #FAFBFC;
-    }
+.dragdrop-supported {
 
     .upload {
 
@@ -42,6 +43,7 @@ body {
         }
 
         p {
+            display: block;
             text-align: center;
         }
 
@@ -73,6 +75,12 @@ body {
                 color: unset;
             }
         }
+    }
+}
+
+.clipboard-supported {
+    .clipboard {
+        display: block;
     }
 }
 

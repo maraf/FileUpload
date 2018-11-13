@@ -6,50 +6,54 @@ body {
   color: #686868;
   padding: 10px; }
 
-.container-draggable-only {
-  display: none; }
-  .container-draggable-only h1, .container-draggable-only img, .container-draggable-only p {
-    display: none; }
-
-.draggable .container {
+.container {
   margin: 50px;
   padding: 50px;
   border: 1px dotted #686868;
   border-radius: 5px;
   background: #FAFBFC; }
 
-.draggable .upload h1 {
+.upload {
+  display: none; }
+  .upload h1, .upload img, .upload p {
+    display: none; }
+
+.dragdrop-supported .upload h1 {
   display: block;
   text-align: center; }
 
-.draggable .upload img {
+.dragdrop-supported .upload img {
   display: block;
   margin: 0 auto; }
 
-.draggable .upload p {
+.dragdrop-supported .upload p {
+  display: block;
   text-align: center; }
 
-.draggable .upload .form {
+.dragdrop-supported .upload .form {
   width: 100px;
   margin: 0 auto; }
 
-.draggable .upload .form button {
+.dragdrop-supported .upload .form button {
   width: 100%;
   display: block;
   padding: 6px; }
 
-.draggable .upload .status {
+.dragdrop-supported .upload .status {
   margin: 20px auto 0 auto; }
 
-.draggable .upload .file {
+.dragdrop-supported .upload .file {
   margin-bottom: 10px; }
 
-.draggable .upload .file-name {
+.dragdrop-supported .upload .file-name {
   margin-bottom: 5px;
   float: left; }
-  .draggable .upload .file-name a {
+  .dragdrop-supported .upload .file-name a {
     text-decoration: none;
     color: unset; }
+
+.clipboard-supported .clipboard {
+  display: block; }
 
 .file-state {
   float: right; }
