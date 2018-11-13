@@ -10,13 +10,5 @@ namespace FileUpload.Models
     {
         public UploadSettings Default { get; set; }
         public Dictionary<string, UploadSettings> Profiles { get; } = new Dictionary<string, UploadSettings>();
-
-        public UploadSettings Find(string role)
-        {
-            if (role != null && Profiles.TryGetValue(role, out var settings))
-                return settings;
-
-            return Default;
-        }
     }
 }

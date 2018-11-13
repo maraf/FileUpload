@@ -1,4 +1,5 @@
-﻿using FileUpload.Models;
+﻿using FileUpload.Controllers.Filters;
+using FileUpload.Models;
 using FileUpload.Services;
 using FileUpload.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -19,22 +20,23 @@ namespace FileUpload.Controllers
     public class MainController : Controller
     {
         private readonly FileService fileService;
-        private readonly UploadSettingsService configurationService;
+        private readonly UploadSettings configuration;
+        private readonly UrlToken urlToken;
 
-        public MainController(FileService fileService, UploadSettingsService configurationService)
+        public MainController(FileService fileService, UploadSettings configuration, Provider<UrlToken> urlToken)
         {
             Ensure.NotNull(fileService, "fileService");
-            Ensure.NotNull(configurationService, "configurationService");
+            Ensure.NotNull(configuration, "configuration");
             this.fileService = fileService;
-            this.configurationService = configurationService;
+            this.configuration = configuration;
+            this.urlToken = urlToken.Optional;
         }
 
         // Because with want URLs both with and wihout UrlToken and ASP.NET can't generate such (it places UrlToken as a QueryString parameter).
         private string GetActionUrl(string actionName)
         {
             string uploadUrl = null;
-            string urlToken = configurationService.FindUrlToken(RouteData);
-            if (String.IsNullOrEmpty(urlToken))
+            if (urlToken == null)
                 uploadUrl = Url.Action(actionName, "Main");
             else if (actionName != "index")
                 uploadUrl = $"/{urlToken}/{actionName}";
@@ -70,10 +72,6 @@ namespace FileUpload.Controllers
         public async Task<StatusCodeResult> Upload(IFormFile file)
         {
             Ensure.NotNull(file, "file");
-            UploadSettings configuration = configurationService.Find(RouteData, User);
-            if (configuration == null)
-                return NotFound();
-
             bool isSuccess = await fileService.SaveAsync(configuration, file.FileName, file.Length, file.OpenReadStream());
             if (isSuccess)
                 return Ok();
@@ -86,9 +84,6 @@ namespace FileUpload.Controllers
         public IActionResult Download(string fileName, string extension)
         {
             Ensure.NotNull(fileName, "fileName");
-            UploadSettings configuration = configurationService.Find(RouteData, User);
-            if (configuration == null)
-                return NotFound();
 
             var content = fileService.FindContent(configuration, fileName, extension);
             if (content == null)
@@ -99,10 +94,6 @@ namespace FileUpload.Controllers
 
         private BrowseViewModel CreateBrowser()
         {
-            UploadSettings configuration = configurationService.Find(RouteData, User);
-            if (configuration == null)
-                return null;
-
             IReadOnlyList<FileModel> files = fileService.FindList(configuration);
             if (files == null)
                 return null;

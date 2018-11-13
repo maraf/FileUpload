@@ -15,7 +15,7 @@ namespace FileUpload.Services
         {
             Ensure.NotNull(configuration, "configuration");
 
-            if (!configuration.IsDownloadEnabled)
+            if (!configuration.IsBrowserEnabled)
                 return null;
 
             List<FileModel> files = Directory

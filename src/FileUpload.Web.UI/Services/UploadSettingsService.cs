@@ -22,13 +22,27 @@ namespace FileUpload.Services
             this.configuration = configuration;
         }
 
-        public string FindUrlToken(RouteData routeData)
-            => routeData.Values["urltoken"]?.ToString();
+        public UrlToken FindUrlToken(RouteData routeData)
+        {
+            string value = routeData.Values["urltoken"]?.ToString();
+            if (String.IsNullOrEmpty(value))
+                return null;
+
+            return new UrlToken(value);
+        }
 
         public UploadSettings Find(RouteData routeData, ClaimsPrincipal principal)
         {
-            string urlToken = FindUrlToken(routeData);
-            return configuration.Value.Find(null);
+            UrlToken urlToken = FindUrlToken(routeData);
+            if (urlToken != null)
+            {
+                if (configuration.Value.Profiles.TryGetValue(urlToken.Value, out var settings))
+                    return settings;
+
+                return null;
+            }
+
+            return configuration.Value.Default;
         }
     }
 }
