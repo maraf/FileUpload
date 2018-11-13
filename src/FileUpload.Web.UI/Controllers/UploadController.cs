@@ -51,9 +51,9 @@ namespace FileUpload.Controllers
             return View(new IndexViewModel(GetAppVersion(), uploadUrl, CreateBrowser()));
         }
 
-        [Route("browse")]
+        [Route("browser")]
         [HttpGet]
-        public IActionResult Browse()
+        public IActionResult Browser()
         {
             BrowseViewModel model = CreateBrowser();
             if (model == null)
