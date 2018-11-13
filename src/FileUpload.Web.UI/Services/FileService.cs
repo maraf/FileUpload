@@ -32,7 +32,7 @@ namespace FileUpload.Services
             Ensure.NotNull(configuration, "configuration");
 
             if (!configuration.IsDownloadEnabled)
-                throw new UnauthorizedAccessException();
+                return null;
 
             if (extension == null)
                 return null;

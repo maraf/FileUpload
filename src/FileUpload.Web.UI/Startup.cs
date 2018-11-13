@@ -60,6 +60,7 @@ namespace FileUpload
             else
                 app.UseExceptionHandler("/error");
 
+            app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseMvc();
         }
