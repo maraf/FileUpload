@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileUpload.ViewModels
+namespace FileUpload.Models
 {
-    public class FileViewModel
+    public class FileModel
     {
         public string Name { get; }
         public long Size { get; }
 
-        public FileViewModel(string name, long size)
+        public FileModel(string name, long size)
         {
             Ensure.NotNull(name, "name");
             Ensure.PositiveOrZero(size, "size");

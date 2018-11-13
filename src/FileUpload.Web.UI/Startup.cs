@@ -26,6 +26,7 @@ namespace FileUpload
         {
             services.AddMvc();
             services.AddTransient<UploadSettingsService>();
+            services.AddTransient<FileService>();
             services.Configure<UploadOptions>(Configuration.GetSection("Upload"));
         }
 

@@ -1,4 +1,5 @@
-﻿using Neptuo;
+﻿using FileUpload.Models;
+using Neptuo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +12,17 @@ namespace FileUpload.ViewModels
     {
         private readonly string downloadUrl;
 
-        public IReadOnlyList<FileViewModel> Files { get; }
+        public IReadOnlyList<FileModel> Files { get; }
 
-        public BrowseViewModel(List<FileViewModel> fileNames, string downloadUrl)
+        public BrowseViewModel(IReadOnlyList<FileModel> files, string downloadUrl)
         {
-            Ensure.NotNull(fileNames, "fileNames");
+            Ensure.NotNull(files, "files");
             Ensure.NotNull(downloadUrl, "downloadUrl");
-            Files = fileNames;
+            Files = files;
             this.downloadUrl = downloadUrl;
         }
 
-        public string GetFileUrl(FileViewModel file)
+        public string GetFileUrl(FileModel file)
         {
             if (downloadUrl.EndsWith('/'))
                 return downloadUrl + file.Name;
