@@ -42,15 +42,22 @@ namespace FileUpload.Controllers
             return base.View(new IndexViewModel(GetAppVersion(), factory.CreateUpload(), factory.CreateBrowser()));
         }
 
-        [Route("browser")]
+        [Route("browse")]
         [HttpGet]
-        public IActionResult Browser()
+        public IActionResult Browse()
         {
             BrowseViewModel model = factory.CreateBrowser();
             if (model == null)
                 return NotFound();
 
             return View(model);
+        }
+
+        [Route("upload")]
+        [HttpGet]
+        public IActionResult Upload()
+        {
+            return View(factory.CreateUpload());
         }
 
         [Route("upload")]

@@ -1,1 +1,17 @@
-﻿
+﻿@model UploadViewModel
+@{
+    ViewData["Title"] = "Upload";
+}
+
+<partial name="_UploadForm" />
+
+@section Scripts 
+{
+    <script>
+
+        var Url = '@Model.Url';
+        var DownloadUrl = '@Model.DownloadUrl';
+        Initialize();
+
+    </script>
+}

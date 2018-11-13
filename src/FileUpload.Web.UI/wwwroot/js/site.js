@@ -59,7 +59,7 @@ function Initialize() {
         for (var i = 0; i < CurrentFiles.length; i++) {
             var file = CurrentFiles[i];
             var fileName = file.customName || file.name;
-            var currentLocation = window.location.href;
+            var currentLocation = DownloadUrl;
             var fileUrl = currentLocation + (currentLocation[currentLocation.length - 1] == '/' ? '' : '/') + fileName;
 
             content += ""

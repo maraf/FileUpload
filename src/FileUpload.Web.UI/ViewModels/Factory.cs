@@ -36,7 +36,7 @@ namespace FileUpload.ViewModels
 
         public UploadViewModel CreateUpload()
         {
-            return new UploadViewModel(urlBuilder.Upload());
+            return new UploadViewModel(urlBuilder.Upload(), urlBuilder.Download());
         }
     }
 }

@@ -12,11 +12,13 @@
 
 <div class="version">@Model.AppVersion</div>
 
-@section Scripts {
-<script>
+@section Scripts 
+{
+    <script>
 
-    var Url = '@Model.Upload.Url';
-    Initialize();
+        var Url = '@Model.Upload.Url';
+        var DownloadUrl = '@Model.Upload.DownloadUrl';
+        Initialize();
 
-</script>
+    </script>
 }
