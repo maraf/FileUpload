@@ -21,46 +21,32 @@ namespace FileUpload.Controllers
     {
         private readonly FileService fileService;
         private readonly UploadSettings configuration;
-        private readonly UrlToken urlToken;
+        private readonly Factory factory;
 
-        public MainController(FileService fileService, UploadSettings configuration, Provider<UrlToken> urlToken)
+        public MainController(FileService fileService, UploadSettings configuration, Factory factory)
         {
             Ensure.NotNull(fileService, "fileService");
             Ensure.NotNull(configuration, "configuration");
+            Ensure.NotNull(factory, "factory");
             this.fileService = fileService;
             this.configuration = configuration;
-            this.urlToken = urlToken.Optional;
+            this.factory = factory;
         }
-
-        // Because with want URLs both with and wihout UrlToken and ASP.NET can't generate such (it places UrlToken as a QueryString parameter).
-        private string GetActionUrl(string actionName)
-        {
-            string uploadUrl = null;
-            if (urlToken == null)
-                uploadUrl = Url.Action(actionName, "Main");
-            else if (actionName != "index")
-                uploadUrl = $"/{urlToken}/{actionName}";
-            else
-                uploadUrl = $"/{urlToken}";
-
-            return uploadUrl;
-        }
-
+        
         private string GetAppVersion()
             => "v" + typeof(UploadOptions).Assembly.GetName().Version.ToString(3);
 
         [Route("")]
         public IActionResult Index()
         {
-            string uploadUrl = GetActionUrl("upload");
-            return View(new IndexViewModel(GetAppVersion(), uploadUrl, CreateBrowser()));
+            return base.View(new IndexViewModel(GetAppVersion(), factory.CreateUpload(), factory.CreateBrowser()));
         }
 
         [Route("browser")]
         [HttpGet]
         public IActionResult Browser()
         {
-            BrowseViewModel model = CreateBrowser();
+            BrowseViewModel model = factory.CreateBrowser();
             if (model == null)
                 return NotFound();
 
@@ -92,17 +78,8 @@ namespace FileUpload.Controllers
             return File(content.Value.Content, content.Value.ContentType);
         }
 
-        private BrowseViewModel CreateBrowser()
-        {
-            IReadOnlyList<FileModel> files = fileService.FindList(configuration);
-            if (files == null)
-                return null;
-
-            return new BrowseViewModel(files, GetActionUrl("index"));
-        }
-
         [HttpGet("/error")]
-        public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public IActionResult Error() => View();
 
         private StatusCodeResult NotValidUpload() => BadRequest();
     }

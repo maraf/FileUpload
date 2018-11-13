@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -30,11 +31,21 @@ namespace FileUpload
             services.AddMvc(options => options.Filters.Add<ProfileFilter>());
             services.AddTransient<UploadSettingsService>();
             services.AddTransient<FileService>();
+            services.AddTransient<UrlBuilder>();
+            services.AddTransient<ViewModels.Factory>();
             services.AddTransient<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient(CreateUploadSettings);
             services.AddTransient(CreateUrlToken);
+            services.AddTransient(CreateUrlHelper);
             services.AddTransientProvider<UrlToken>();
             services.Configure<UploadOptions>(Configuration.GetSection("Upload"));
+        }
+
+        private IUrlHelper CreateUrlHelper(IServiceProvider services)
+        {
+            ActionContext actionContext = services.GetRequiredService<IActionContextAccessor>().ActionContext;
+            IUrlHelperFactory factory = services.GetRequiredService<IUrlHelperFactory>();
+            return factory.GetUrlHelper(actionContext);
         }
 
         private UploadSettings CreateUploadSettings(IServiceProvider services)
