@@ -84,7 +84,6 @@ location = /update.html {
     internal;
     root  /{path_to_directory_with_update.html};
 }
-
 ```
 
 To make website enabled, create a symbolic link in `sites-enabled`:
