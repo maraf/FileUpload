@@ -99,5 +99,25 @@ namespace FileUpload.Services
 
             return true;
         }
+
+        public bool Delete(UploadSettings configuration, string fileName)
+        {
+            Ensure.NotNullOrEmpty(fileName, "fileName");
+
+            if (!configuration.IsDeleteEnabled)
+                return false;
+
+            string extension = Path.GetExtension(fileName)?.ToLowerInvariant();
+            if (!configuration.SupportedExtensions.Contains(extension))
+                return false;
+
+            if (!Directory.Exists(configuration.StoragePath))
+                return false;
+
+            string filePath = Path.Combine(configuration.StoragePath, fileName);
+            File.Delete(filePath);
+
+            return true;
+        }
     }
 }

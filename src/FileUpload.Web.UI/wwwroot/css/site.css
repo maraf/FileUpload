@@ -104,6 +104,9 @@ body {
 .browser .file-size {
   width: 70px; }
 
+.browser .file-delete {
+  width: 25px; }
+
 @media (max-width: 560px) {
   .browser .file-size {
     display: none; } }

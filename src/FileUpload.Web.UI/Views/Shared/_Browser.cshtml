@@ -5,6 +5,10 @@
         <tr>
             <th class="file-name">Name</th>
             <th class="file-size">Size</th>
+            @if (Model.IsDeleteEnabled)
+            {
+                <th class="file-delete"></th>
+            }
         </tr>
         @foreach (var file in Model.Files)
         {
@@ -15,6 +19,15 @@
                 <td class="file-size">
                     @file.Size B
                 </td>
+                @if (Model.IsDeleteEnabled)
+                {
+                    <td class="file-delete">
+                        <form asp-action="Delete" method="post">
+                            <input type="hidden" name="FileName" value="@file.Name" />
+                            <button title="Delete File">X</button>
+                        </form>
+                    </td>
+                }
             </tr>
         }
     </table>

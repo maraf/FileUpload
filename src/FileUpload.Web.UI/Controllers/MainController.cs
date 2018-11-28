@@ -32,7 +32,7 @@ namespace FileUpload.Controllers
             this.configuration = configuration;
             this.factory = factory;
         }
-        
+
         private string GetAppVersion()
             => "v" + typeof(UploadOptions).Assembly.GetName().Version.ToString(3);
 
@@ -83,6 +83,13 @@ namespace FileUpload.Controllers
                 return NotFound();
 
             return File(content.Value.Content, content.Value.ContentType);
+        }
+
+        [Route("delete")]
+        public IActionResult Delete([FromServices] UrlBuilder urlBuilder, string fileName)
+        {
+            fileService.Delete(configuration, fileName);
+            return Redirect(urlBuilder.Index());
         }
 
         [HttpGet("/error")]

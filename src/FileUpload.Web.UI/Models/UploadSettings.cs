@@ -15,5 +15,6 @@ namespace FileUpload.Models
         public bool IsOverrideEnabled { get; set; }
         public bool IsDownloadEnabled { get; set; }
         public bool IsBrowserEnabled { get; set; }
+        public bool IsDeleteEnabled { get; set; }
     }
 }
