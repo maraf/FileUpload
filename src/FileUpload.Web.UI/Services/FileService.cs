@@ -78,8 +78,12 @@ namespace FileUpload.Services
             if (!configuration.SupportedExtensions.Contains(extension))
                 return false;
 
-            if (!Directory.Exists(configuration.StoragePath))
-                Directory.CreateDirectory(configuration.StoragePath);
+            DirectoryInfo directory = new DirectoryInfo(configuration.StoragePath);
+            if (configuration.MaxStorageLength != null && directory.GetLength() + length > configuration.MaxStorageLength.Value)
+                return false;
+
+            if (!directory.Exists)
+                directory.Create();
 
             string filePath = Path.Combine(configuration.StoragePath, name);
             if (File.Exists(filePath))
