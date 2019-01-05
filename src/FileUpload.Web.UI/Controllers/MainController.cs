@@ -18,7 +18,7 @@ namespace FileUpload.Controllers
 {
     [Route("")]
     [Route("{urltoken:regex([[a-zA-Z0-9]]+)}")]
-    [Authorize]
+    [TypeFilter(typeof(ProfileFilter))]
     public class MainController : Controller
     {
         private readonly FileService fileService;

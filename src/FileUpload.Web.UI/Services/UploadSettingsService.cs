@@ -33,6 +33,15 @@ namespace FileUpload.Services
 
         public UploadSettings Find(RouteData routeData, ClaimsPrincipal principal)
         {
+            UploadSettings settings = FindSettings(routeData);
+            if (ValidateUser(settings, principal))
+                return settings;
+
+            return null;
+        }
+
+        private UploadSettings FindSettings(RouteData routeData)
+        {
             UrlToken urlToken = FindUrlToken(routeData);
             if (urlToken != null)
             {
@@ -43,6 +52,31 @@ namespace FileUpload.Services
             }
 
             return configuration.Value.Default;
+        }
+
+        private bool ValidateUser(UploadSettings settings, ClaimsPrincipal principal)
+        {
+            if (settings == null)
+                return false;
+
+            if (settings.Roles == null || settings.Roles.Count == 0)
+                return true;
+
+            if (!principal.Identity.IsAuthenticated)
+                return false;
+
+            List<string> userRoles = principal.Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value)
+                .ToList();
+
+            if (userRoles == null || userRoles.Count == 0)
+                return true;
+
+            if (settings.Roles.Any(r => userRoles.Contains(r)))
+                return true;
+
+            return false;
         }
     }
 }

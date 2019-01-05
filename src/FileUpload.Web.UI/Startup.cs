@@ -29,7 +29,7 @@ namespace FileUpload
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddMvc(options => options.Filters.Add<ProfileFilter>());
+                .AddMvc();
 
             services
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

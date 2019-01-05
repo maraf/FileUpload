@@ -16,5 +16,6 @@ namespace FileUpload.Models
         public bool IsDownloadEnabled { get; set; }
         public bool IsBrowserEnabled { get; set; }
         public bool IsDeleteEnabled { get; set; }
+        public List<string> Roles { get; set; }
     }
 }
