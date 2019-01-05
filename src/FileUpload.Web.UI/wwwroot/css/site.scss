@@ -20,6 +20,11 @@ body {
     background: #FAFBFC;
 }
 
+.container-narrow {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
 .upload {
     display: none;
 
@@ -161,6 +166,10 @@ body {
     .file-delete {
         width: 25px;
     }
+}
+
+.login-info {
+    float: right;
 }
 
 @import "site.reponsive";

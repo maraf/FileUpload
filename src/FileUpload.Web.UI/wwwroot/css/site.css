@@ -13,6 +13,10 @@ body {
   border-radius: 5px;
   background: #FAFBFC; }
 
+.container-narrow {
+  padding-top: 20px;
+  padding-bottom: 20px; }
+
 .upload {
   display: none; }
   .upload h1, .upload img, .upload p {
@@ -106,6 +110,9 @@ body {
 
 .browser .file-delete {
   width: 25px; }
+
+.login-info {
+  float: right; }
 
 @media (max-width: 560px) {
   .browser .file-size {
