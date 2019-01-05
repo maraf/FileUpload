@@ -40,7 +40,7 @@ namespace FileUpload
             services.AddTransient<UrlBuilder>();
             services.AddTransient<ViewModels.Factory>();
             services.AddTransient<IActionContextAccessor, ActionContextAccessor>();
-            services.AddTransient(CreateUploadSettings);
+            services.AddScoped(CreateUploadSettings);
             services.AddTransient(CreateUrlToken);
             services.AddTransient(CreateUrlHelper);
             services.AddTransientProvider<UrlToken>();
