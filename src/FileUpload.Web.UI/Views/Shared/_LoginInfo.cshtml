@@ -3,6 +3,8 @@
     <div class="container container-narrow">
         <div class="login-info">
             <form asp-controller="Account" asp-action="Logout">
+                <partial name="_AuthenticationReturnUrlHidden" model="@Microsoft.AspNetCore.Http.Extensions.UriHelper.GetEncodedPathAndQuery(Context.Request)" />
+
                 Hi, <strong>@Context.User.Identity.Name</strong>!
                 <button type="submit">Logout</button>
             </form>

@@ -92,8 +92,8 @@ namespace FileUpload.Controllers
 
         private IActionResult RedirectTo()
         {
-            string returnUrl = HttpContext.Request.Query[CookieAuthenticationDefaults.ReturnUrlParameter];
-            if (returnUrl != null)
+            string returnUrl = HttpContext.Request.Form[CookieAuthenticationDefaults.ReturnUrlParameter];
+            if (!String.IsNullOrEmpty(returnUrl))
                 return Redirect(returnUrl);
 
             return RedirectToAction(nameof(MainController.Index), "Main");

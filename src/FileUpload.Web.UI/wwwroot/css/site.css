@@ -114,6 +114,19 @@ body {
 .login-info {
   float: right; }
 
+.login {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto; }
+  .login input, .login button {
+    display: block;
+    padding: 6px 8px; }
+  .login input {
+    width: calc(100% - 20px);
+    margin: 0 0 12px 0; }
+  .login button {
+    margin: 12px auto 0 auto; }
+
 @media (max-width: 560px) {
   .browser .file-size {
     display: none; } }
