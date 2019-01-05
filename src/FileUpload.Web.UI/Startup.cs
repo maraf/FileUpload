@@ -1,6 +1,7 @@
 ﻿using FileUpload.Controllers.Filters;
 using FileUpload.Models;
 using FileUpload.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +28,13 @@ namespace FileUpload
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-            services.AddMvc(options => options.Filters.Add<ProfileFilter>());
+            services
+                .AddMvc(options => options.Filters.Add<ProfileFilter>());
+
+            services
+                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
+
             services.AddTransient<UploadSettingsService>();
             services.AddTransient<FileService>();
             services.AddTransient<UrlBuilder>();
@@ -38,6 +44,7 @@ namespace FileUpload
             services.AddTransient(CreateUrlToken);
             services.AddTransient(CreateUrlHelper);
             services.AddTransientProvider<UrlToken>();
+
             services.Configure<UploadOptions>(Configuration.GetSection("Upload"));
         }
 
@@ -71,6 +78,7 @@ namespace FileUpload
             else
                 app.UseExceptionHandler("/error");
 
+            app.UseAuthentication();
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseMvc();

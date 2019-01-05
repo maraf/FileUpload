@@ -1,0 +1,8 @@
+﻿@model LoginModel
+
+<form asp-controller="Account" asp-action="Login" method="post">
+    <input asp-for="Username" />
+    <input asp-for="Password" type="password" />
+
+    <button type="submit">Sign in</button>
+</form>

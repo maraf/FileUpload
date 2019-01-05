@@ -2,6 +2,7 @@
 using FileUpload.Models;
 using FileUpload.Services;
 using FileUpload.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -17,6 +18,7 @@ namespace FileUpload.Controllers
 {
     [Route("")]
     [Route("{urltoken:regex([[a-zA-Z0-9]]+)}")]
+    [Authorize]
     public class MainController : Controller
     {
         private readonly FileService fileService;
