@@ -46,6 +46,7 @@ namespace FileUpload
             services.AddTransientProvider<UrlToken>();
 
             services.Configure<UploadOptions>(Configuration.GetSection("Upload"));
+            services.Configure<AccountOptions>(Configuration.GetSection("Authentication"));
         }
 
         private IUrlHelper CreateUrlHelper(IServiceProvider services)

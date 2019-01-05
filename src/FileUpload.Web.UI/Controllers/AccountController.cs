@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Neptuo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,14 @@ namespace FileUpload.Controllers
     [Route("[controller]")]
     public class AccountController : Controller
     {
+        private readonly AccountOptions options;
+
+        public AccountController(IOptions<AccountOptions> options)
+        {
+            Ensure.NotNull(options, "options");
+            this.options = options.Value;
+        }
+
         [Route("[action]")]
         public IActionResult Login() => View();
 
@@ -21,32 +31,55 @@ namespace FileUpload.Controllers
         [Route("[action]")]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            if (model.Username == "test" && model.Password == "test")
+            if (ModelState.IsValid)
             {
-                var claims = new List<Claim>()
+                AccountModel account = options.Accounts.FirstOrDefault(a => a.Username == model.Username && a.Password == model.Password);
+                if (account == null)
                 {
-                    new Claim(ClaimTypes.Name, model.Username),
-                    new Claim(ClaimTypes.Role, "test"),
-                };
+                    ModelState.AddModelError(null, "No such combination of username and password.");
+                    return View(model);
+                }
 
-                var claimsIdentity = new ClaimsIdentity(
-                    claims,
-                    CookieAuthenticationDefaults.AuthenticationScheme
-                );
-
-                var authProperties = new AuthenticationProperties()
-                {
-                    AllowRefresh = true
-                };
-
+                ClaimsPrincipal principal = CreatePrincipal(account);
+                AuthenticationProperties authProperties = CreateAuthenticationProperties();
                 await HttpContext.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity),
+                    principal,
                     authProperties
                 );
+
+                return RedirectTo();
             }
 
-            return RedirectTo();
+            return View(model);
+        }
+
+        private static AuthenticationProperties CreateAuthenticationProperties()
+        {
+            return new AuthenticationProperties()
+            {
+                AllowRefresh = true
+            };
+        }
+
+        private static ClaimsPrincipal CreatePrincipal(AccountModel account)
+        {
+            var claims = new List<Claim>(1 + account.Roles?.Count ?? 0);
+
+            claims.Add(new Claim(ClaimTypes.Name, account.Username));
+
+            if (account.Roles != null)
+            {
+                foreach (string role in account.Roles)
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            var claimsIdentity = new ClaimsIdentity(
+                claims,
+                CookieAuthenticationDefaults.AuthenticationScheme
+            );
+
+            return new ClaimsPrincipal(claimsIdentity);
         }
 
         [HttpPost]
