@@ -3,7 +3,7 @@
     ViewData["Title"] = "Upload";
 }
 
-<partial name="_UploadForm" />
+<partial name="_UploadForm" model="@Model.Upload" />
 
 @if (Model.Browser != null)
 {

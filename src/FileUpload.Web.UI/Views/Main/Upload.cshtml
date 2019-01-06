@@ -3,14 +3,12 @@
     ViewData["Title"] = "Upload";
 }
 
-<partial name="_UploadForm" />
+<partial name="_UploadForm" model="@Model" />
 
 @section Scripts 
 {
     <script>
 
-        var Url = '@Model.Url';
-        var DownloadUrl = '@Model.DownloadUrl';
         Initialize();
 
     </script>

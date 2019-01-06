@@ -108,6 +108,9 @@ body {
 .browser .file-size {
   width: 70px; }
 
+.browser td.file-size {
+  text-align: right; }
+
 .browser .file-delete {
   width: 25px; }
 

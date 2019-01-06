@@ -31,12 +31,12 @@ namespace FileUpload.ViewModels
             if (files == null)
                 return null;
 
-            return new BrowseViewModel(files, urlBuilder.Index(), configuration.IsDeleteEnabled);
+            return new BrowseViewModel(files, urlBuilder.Index(), configuration.IsDownloadEnabled, configuration.IsDeleteEnabled);
         }
 
         public UploadViewModel CreateUpload()
         {
-            return new UploadViewModel(urlBuilder.Upload(), urlBuilder.Download());
+            return new UploadViewModel(urlBuilder.Upload(), urlBuilder.Download(), configuration.IsDownloadEnabled);
         }
     }
 }

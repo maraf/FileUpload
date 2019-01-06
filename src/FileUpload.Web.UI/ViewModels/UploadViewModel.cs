@@ -12,12 +12,15 @@ namespace FileUpload.ViewModels
         public string Url { get; }
         public string DownloadUrl { get; }
 
-        public UploadViewModel(string url, string downloadUrl)
+        public bool IsDownloadEnabled { get; set; }
+
+        public UploadViewModel(string url, string downloadUrl, bool isDownloadEnabled)
         {
             Ensure.NotNull(url, "url");
             Ensure.NotNull(downloadUrl, "downloadUrl");
             Url = url;
             DownloadUrl = downloadUrl;
+            IsDownloadEnabled = isDownloadEnabled;
         }
     }
 }

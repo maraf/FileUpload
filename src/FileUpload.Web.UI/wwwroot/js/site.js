@@ -1,6 +1,6 @@
 ﻿// Write your JavaScript code.
 
-function UploadFile(file, onCompleted, onError, onProgress) {
+function UploadFile(file, url, onCompleted, onError, onProgress) {
     var formData = new FormData();
     formData.append("file", file, file.customName || file.name);
 
@@ -21,7 +21,7 @@ function UploadFile(file, onCompleted, onError, onProgress) {
 
     if (onError != null) {
         currentRequest.onerror = function (e) {
-            onError(500, e.message)
+            onError(500, e.message);
         };
     }
 
@@ -31,7 +31,7 @@ function UploadFile(file, onCompleted, onError, onProgress) {
         };
     }
 
-    currentRequest.open("POST", Url);
+    currentRequest.open("POST", url);
     currentRequest.send(formData);
 }
 
@@ -59,15 +59,20 @@ function Initialize() {
         for (var i = 0; i < CurrentFiles.length; i++) {
             var file = CurrentFiles[i];
             var fileName = file.customName || file.name;
-            var currentLocation = DownloadUrl;
-            var fileUrl = currentLocation + (currentLocation[currentLocation.length - 1] == '/' ? '' : '/') + fileName;
+            var currentLocation = Form.dataset['downloadUrl'];
+
+            var fileNameHtml = "";
+            if (currentLocation != '') {
+                var fileUrl = currentLocation + (currentLocation[currentLocation.length - 1] == '/' ? '' : '/') + fileName;
+                fileNameHtml = "<a href='" + fileUrl + "' target='_blank'>" + fileName + "</a>";
+            } else {
+                fileNameHtml = fileName;
+            }
 
             content += ""
                 + "<div data-file-index='" + i + "' class='file'>"
                     + "<div class='file-name'>"
-                        + "<a href='" + fileUrl + "' target='_blank'>" 
-                            + fileName
-                        + "</a>"
+                        + fileNameHtml
                     + "</div>"
                     + "<div class='file-state'>Waiting</div>"
                     + "<div class='clear'></div>"
@@ -92,6 +97,7 @@ function Initialize() {
 
             UploadFile(
                 CurrentFiles[CurrentFileIndex],
+                Form.action,
                 function (e) {
                     if (container != null) {
                         container.classList.remove("file-current");

@@ -14,10 +14,17 @@
         {
             <tr>
                 <td class="file-name">
-                    <a href="@Model.GetFileUrl(file)" target="_blank">@file.Name</a>
+                    @if (Model.IsDownloadEnabled)
+                    {
+                        <a href="@Model.GetFileUrl(file)" target="_blank">@file.Name</a>
+                    }
+                    else
+                    {
+                        @file.Name
+                    }
                 </td>
                 <td class="file-size">
-                    @file.Size B
+                    @file.Size.ToString("N0") B
                 </td>
                 @if (Model.IsDeleteEnabled)
                 {

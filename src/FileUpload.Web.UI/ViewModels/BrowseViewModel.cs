@@ -13,13 +13,15 @@ namespace FileUpload.ViewModels
         private readonly string downloadUrl;
 
         public IReadOnlyList<FileModel> Files { get; }
+        public bool IsDownloadEnabled { get; }
         public bool IsDeleteEnabled { get; }
 
-        public BrowseViewModel(IReadOnlyList<FileModel> files, string downloadUrl, bool isDeleteEnabled)
+        public BrowseViewModel(IReadOnlyList<FileModel> files, string downloadUrl, bool isDownloadEnabled, bool isDeleteEnabled)
         {
             Ensure.NotNull(files, "files");
             Ensure.NotNull(downloadUrl, "downloadUrl");
             Files = files;
+            IsDownloadEnabled = isDownloadEnabled;
             IsDeleteEnabled = isDeleteEnabled;
             this.downloadUrl = downloadUrl;
         }
