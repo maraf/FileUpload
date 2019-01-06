@@ -18,6 +18,9 @@ namespace FileUpload.Services
             if (!configuration.IsBrowserEnabled)
                 return null;
 
+            if (!Directory.Exists(configuration.StoragePath))
+                return Array.Empty<FileModel>();
+
             List<FileModel> files = Directory
                 .EnumerateFiles(configuration.StoragePath)
                 .Where(f => configuration.SupportedExtensions.Contains(Path.GetExtension(f).ToLowerInvariant()))
