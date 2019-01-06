@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Neptuo.Text.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ namespace FileUpload.Models
         public bool IsBrowserEnabled { get; set; }
         public bool IsDeleteEnabled { get; set; }
         public bool IsListed { get; set; }
+        public string BackupTemplate { get; set; }
         public List<string> Roles { get; set; }
     }
 }

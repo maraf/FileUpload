@@ -1,5 +1,6 @@
 ﻿using FileUpload.Models;
 using Neptuo;
+using Neptuo.Text.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -92,15 +93,57 @@ namespace FileUpload.Services
             if (File.Exists(filePath))
             {
                 if (configuration.IsOverrideEnabled)
+                {
+                    TryBackupFile(configuration, filePath);
                     File.Delete(filePath);
+                }
                 else
+                {
                     return false;
+                }
             }
 
             using (Stream fileContent = new FileStream(filePath, FileMode.OpenOrCreate))
                 await content.CopyToAsync(fileContent);
 
             return true;
+        }
+
+        private static void TryBackupFile(UploadSettings configuration, string filePath)
+        {
+            if (!String.IsNullOrEmpty(configuration.BackupTemplate))
+            {
+                TokenWriter writer = new TokenWriter(configuration.BackupTemplate);
+
+                int order = 0;
+                string newFilePath = null;
+                do
+                {
+                    string newFileName = writer.Format(token =>
+                    {
+                        if (token == "FileName")
+                            return Path.GetFileNameWithoutExtension(filePath);
+
+                        if (token == "Extension")
+                            return Path.GetExtension(filePath).Substring(1);
+
+                        if (token == "Order")
+                            return (++order).ToString();
+
+                        throw Ensure.Exception.NotSupported($"Not supported token '{token}' in backup template '{configuration.BackupTemplate}'.");
+                    });
+
+                    string currentNewFilePath = Path.Combine(Path.GetDirectoryName(filePath), newFileName);
+
+                    if (currentNewFilePath == newFilePath || order > 100)
+                        throw Ensure.Exception.InvalidOperation($"Maximum path probing reached on path '{newFilePath}'.");
+
+                    newFilePath = currentNewFilePath;
+                }
+                while (File.Exists(newFilePath));
+
+                File.Copy(filePath, newFilePath);
+            }
         }
 
         public bool Delete(UploadSettings configuration, string fileName)
