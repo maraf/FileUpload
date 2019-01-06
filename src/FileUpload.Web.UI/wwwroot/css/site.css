@@ -111,21 +111,25 @@ body {
 .browser .file-delete {
   width: 25px; }
 
+.validation {
+  color: red; }
+
 .login-info {
   float: right; }
 
 .login {
-  width: 200px;
+  width: 250px;
   margin-left: auto;
   margin-right: auto; }
-  .login input, .login button {
+  .login input, .login button, .login span.validation {
     display: block;
     padding: 6px 8px; }
   .login input {
-    width: calc(100% - 20px);
-    margin: 0 0 12px 0; }
+    width: calc(100% - 20px); }
   .login button {
     margin: 12px auto 0 auto; }
+  .login span.validation {
+    margin: 0 0 12px 0; }
 
 @media (max-width: 560px) {
   .browser .file-size {

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Neptuo;
+using Neptuo.Security.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,11 +34,13 @@ namespace FileUpload.Controllers
         {
             if (ModelState.IsValid)
             {
-                AccountModel account = options.Accounts.FirstOrDefault(a => a.Username == model.Username && a.Password == model.Password);
+                string password = HashProvider.Sha256($"{model.Username}.{model.Password}");
+
+                AccountModel account = options.Accounts.FirstOrDefault(a => a.Username == model.Username && a.Password == password);
                 if (account == null)
                 {
-                    ModelState.AddModelError(null, "No such combination of username and password.");
-                    return View(model);
+                    ModelState.AddModelError(nameof(LoginModel.Username), "No such combination of the username and the password.");
+                    return View();
                 }
 
                 ClaimsPrincipal principal = CreatePrincipal(account);
@@ -51,7 +54,7 @@ namespace FileUpload.Controllers
                 return RedirectTo();
             }
 
-            return View(model);
+            return View();
         }
 
         private static AuthenticationProperties CreateAuthenticationProperties()

@@ -1,10 +1,13 @@
 ﻿@model LoginModel
 
 <div class="container login">
+
     <form asp-controller="Account" asp-action="Login" method="post">
         <partial name="_AuthenticationReturnUrlHidden" />
         <input asp-for="Username" placeholder="Username" autofocus />
+        <span asp-validation-for="Username" class="validation"></span>
         <input asp-for="Password" type="password" placeholder="Password" />
+        <span asp-validation-for="Password" class="validation"></span>
 
         <button type="submit">Sign in</button>
     </form>
