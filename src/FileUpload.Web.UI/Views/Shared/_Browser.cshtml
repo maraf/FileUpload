@@ -1,41 +1,48 @@
 ﻿@model BrowseViewModel
 
 <div class="container browser">
-    <table>
-        <tr>
-            <th class="file-name">Name</th>
-            <th class="file-size">Size</th>
-            @if (Model.IsDeleteEnabled)
-            {
-                <th class="file-delete"></th>
-            }
-        </tr>
-        @foreach (var file in Model.Files)
-        {
+    @if (Model.Files.Count > 0)
+    {
+        <table>
             <tr>
-                <td class="file-name">
-                    @if (Model.IsDownloadEnabled)
-                    {
-                        <a href="@Model.GetFileUrl(file)" target="_blank">@file.Name</a>
-                    }
-                    else
-                    {
-                        @file.Name
-                    }
-                </td>
-                <td class="file-size">
-                    @file.Size.ToString("N0") B
-                </td>
+                <th class="file-name">Name</th>
+                <th class="file-size">Size</th>
                 @if (Model.IsDeleteEnabled)
                 {
-                    <td class="file-delete">
-                        <form asp-action="Delete" method="post">
-                            <input type="hidden" name="FileName" value="@file.Name" />
-                            <button title="Delete File">X</button>
-                        </form>
-                    </td>
+                    <th class="file-delete"></th>
                 }
             </tr>
-        }
-    </table>
+            @foreach (var file in Model.Files)
+            {
+                <tr>
+                    <td class="file-name">
+                        @if (Model.IsDownloadEnabled)
+                        {
+                            <a href="@Model.GetFileUrl(file)" target="_blank">@file.Name</a>
+                        }
+                        else
+                        {
+                            @file.Name
+                        }
+                    </td>
+                    <td class="file-size">
+                        @file.Size.ToString("N0") B
+                    </td>
+                    @if (Model.IsDeleteEnabled)
+                    {
+                        <td class="file-delete">
+                            <form asp-action="Delete" method="post">
+                                <input type="hidden" name="FileName" value="@file.Name" />
+                                <button title="Delete File">X</button>
+                            </form>
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <div class="nodata-message">Nothing to show here.</div>
+    }
 </div>
