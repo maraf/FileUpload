@@ -76,7 +76,7 @@ function Initialize() {
                     + "</div>"
                     + "<div class='file-state'>Waiting</div>"
                     + "<div class='clear'></div>"
-                    + "<div class='file-progress'></div>"
+                    + "<div class='file-progress' style='width: 0%;'></div>"
                 + "</div>";
         }
 
