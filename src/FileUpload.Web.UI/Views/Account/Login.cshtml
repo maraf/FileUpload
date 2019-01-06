@@ -5,7 +5,7 @@
 
 <div class="container login">
 
-    <form asp-controller="Account" asp-action="Login" method="post">
+    <form asp-controller="account" asp-action="login" method="post">
         <partial name="_AuthenticationReturnUrlHidden" />
         <input asp-for="Username" placeholder="Username" autofocus />
         <span asp-validation-for="Username" class="validation"></span>
