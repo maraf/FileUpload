@@ -85,14 +85,16 @@ namespace FileUpload.Services
 
             List<ProfileModel> result = new List<ProfileModel>();
 
-            if (ValidateUser(configuration.Value.Default, principal))
-                result.Add(new ProfileModel("default", null));
+            void TryAdd(UploadSettings profile, string name, string urlToken)
+            {
+                if (profile.IsListed && ValidateUser(profile, principal))
+                    result.Add(new ProfileModel(name, urlToken));
+            }
+
+            TryAdd(configuration.Value.Default, "default", null);
 
             foreach (var profile in configuration.Value.Profiles)
-            {
-                if (ValidateUser(profile.Value, principal))
-                    result.Add(new ProfileModel(profile.Key, profile.Key));
-            }
+                TryAdd(profile.Value, profile.Key, profile.Key);
 
             return result;
         }
