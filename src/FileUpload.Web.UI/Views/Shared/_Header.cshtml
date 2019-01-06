@@ -1,9 +1,12 @@
 ﻿@inject ProfileListViewModel ViewModel
+@{ 
+    bool hasProfiles = ViewModel.Profiles.Count > 0 && (bool?)ViewData["IsProfileListVisible"] != false;
+}
 
-@if (Context.User.Identity.IsAuthenticated || ViewModel.Profiles.Count > 0)
+@if (Context.User.Identity.IsAuthenticated || hasProfiles)
 {
     <div class="container container-narrow">
-        @if (ViewModel.Profiles.Count > 0)
+        @if (hasProfiles)
         {
             <div class="profile-list">
                 <ul>
