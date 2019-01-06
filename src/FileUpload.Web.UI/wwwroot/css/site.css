@@ -134,6 +134,18 @@ body {
   .login span.validation {
     margin: 0 0 12px 0; }
 
+.profile-list {
+  float: left; }
+  .profile-list ul {
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+    .profile-list ul li {
+      margin: 0;
+      display: inline; }
+      .profile-list ul li a {
+        padding: 4px; }
+
 @media (max-width: 560px) {
   .browser .file-size {
     display: none; } }

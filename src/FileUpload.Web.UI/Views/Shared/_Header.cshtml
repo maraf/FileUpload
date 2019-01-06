@@ -1,0 +1,37 @@
+﻿@inject ProfileListViewModel ViewModel
+
+@if (Context.User.Identity.IsAuthenticated || ViewModel.Profiles.Count > 0)
+{
+    <div class="container container-narrow">
+        @if (ViewModel.Profiles.Count > 0)
+        {
+            <div class="profile-list">
+                <ul>
+                    @foreach (var profile in ViewModel.Profiles)
+                    {
+                        <li>
+                            <a href="/@profile.UrlToken">@profile.Name</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+
+        <div class="login-info">
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                    <form asp-controller="Account" asp-action="Logout">
+                        <partial name="_AuthenticationReturnUrlHidden" model="@Microsoft.AspNetCore.Http.Extensions.UriHelper.GetEncodedPathAndQuery(Context.Request)" />
+
+                        Hi, <strong>@Context.User.Identity.Name</strong>!
+                        <button type="submit">Logout</button>
+                    </form>
+            }
+            else
+            {
+                <a asp-controller="account" asp-action="login" asp-route-ReturnUrl="@Microsoft.AspNetCore.Http.Extensions.UriHelper.GetEncodedPathAndQuery(Context.Request)">Login</a>
+            }
+        </div>
+        <div class="clear"></div>
+    </div>
+}

@@ -78,5 +78,23 @@ namespace FileUpload.Services
 
             return false;
         }
+
+        public IReadOnlyList<ProfileModel> GetList(ClaimsPrincipal principal)
+        {
+            Ensure.NotNull(principal, "principal");
+
+            List<ProfileModel> result = new List<ProfileModel>();
+
+            if (ValidateUser(configuration.Value.Default, principal))
+                result.Add(new ProfileModel("default", null));
+
+            foreach (var profile in configuration.Value.Profiles)
+            {
+                if (ValidateUser(profile.Value, principal))
+                    result.Add(new ProfileModel(profile.Key, profile.Key));
+            }
+
+            return result;
+        }
     }
 }

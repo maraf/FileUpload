@@ -1,6 +1,7 @@
 ﻿using FileUpload.Controllers.Filters;
 using FileUpload.Models;
 using FileUpload.Services;
+using FileUpload.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,10 +44,17 @@ namespace FileUpload
             services.AddScoped(CreateUploadSettings);
             services.AddTransient(CreateUrlToken);
             services.AddTransient(CreateUrlHelper);
+            services.AddTransient(CreateProfileList);
             services.AddTransientProvider<UrlToken>();
 
             services.Configure<UploadOptions>(Configuration.GetSection("Upload"));
             services.Configure<AccountOptions>(Configuration.GetSection("Authentication"));
+        }
+
+        private ProfileListViewModel CreateProfileList(IServiceProvider services)
+        {
+            ActionContext actionContext = services.GetRequiredService<IActionContextAccessor>().ActionContext;
+            return services.GetRequiredService<Factory>().CreateProfileList(actionContext.HttpContext.User);
         }
 
         private IUrlHelper CreateUrlHelper(IServiceProvider services)

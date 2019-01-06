@@ -205,4 +205,23 @@ body {
     }
 }
 
+.profile-list {
+    float: left;
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            margin: 0;
+            display: inline;
+
+            a {
+                padding: 4px;
+            }
+        }
+    }
+}
+
 @import "site.reponsive";
