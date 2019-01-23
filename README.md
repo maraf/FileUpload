@@ -23,7 +23,7 @@ After=multi-user.target
 [Service]
 Type=simple
 WorkingDirectory=/wwwroot/{path_to_directory}
-ExecStart=/wwwroot/{path_to_directory}/{executable_name}
+ExecStart=/wwwroot/{path_to_directory}/{executable_name} --server.urls "http://*:{kestrel_port}"
 Restart=on-abort
 
 [Install]
