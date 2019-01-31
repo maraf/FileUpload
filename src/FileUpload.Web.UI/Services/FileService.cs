@@ -30,6 +30,7 @@ namespace FileUpload.Services
                     var fileInfo = new FileInfo(f);
                     return new FileModel(Path.GetFileName(f), fileInfo.Length, fileInfo.LastWriteTime);
                 })
+                .OrderBy(f => f.Name)
                 .ToList();
 
             return files;
