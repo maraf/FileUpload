@@ -11,13 +11,15 @@ namespace FileUpload.Models
     {
         public string Name { get; }
         public long Size { get; }
+        public DateTime ModifiedAt { get; set; }
 
-        public FileModel(string name, long size)
+        public FileModel(string name, long size, DateTime modifiedAt)
         {
             Ensure.NotNull(name, "name");
             Ensure.PositiveOrZero(size, "size");
             Name = name;
             Size = size;
+            ModifiedAt = modifiedAt;
         }
     }
 }

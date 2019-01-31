@@ -108,6 +108,9 @@ body {
 .browser .file-size {
   width: 70px; }
 
+.browser .file-modifiedat {
+  width: 140px; }
+
 .browser td.file-size {
   text-align: right; }
 

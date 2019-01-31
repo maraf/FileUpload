@@ -25,7 +25,11 @@ namespace FileUpload.Services
             List<FileModel> files = Directory
                 .EnumerateFiles(configuration.StoragePath)
                 .Where(f => configuration.SupportedExtensions.Contains(Path.GetExtension(f).ToLowerInvariant()))
-                .Select(f => new FileModel(Path.GetFileName(f), new FileInfo(f).Length))
+                .Select(f =>
+                {
+                    var fileInfo = new FileInfo(f);
+                    return new FileModel(Path.GetFileName(f), fileInfo.Length, fileInfo.LastWriteTime);
+                })
                 .ToList();
 
             return files;

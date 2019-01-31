@@ -7,6 +7,7 @@
             <tr>
                 <th class="file-name">Name</th>
                 <th class="file-size">Size</th>
+                <th class="file-modifiedat">Modified at</th>
                 @if (Model.IsDeleteEnabled)
                 {
                     <th class="file-delete"></th>
@@ -26,7 +27,10 @@
                         }
                     </td>
                     <td class="file-size">
-                        @file.Size.ToString("N0") B
+                        @(Math.Round(((decimal)file.Size / 1000), MidpointRounding.AwayFromZero).ToString("N0")) KB
+                    </td>
+                    <td class="file-modifiedat">
+                        @file.ModifiedAt
                     </td>
                     @if (Model.IsDeleteEnabled)
                     {
