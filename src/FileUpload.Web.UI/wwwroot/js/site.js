@@ -67,8 +67,13 @@ function Initialize() {
                             var temp = document.createElement("div");
                             temp.innerHTML = body;
 
-                            var newBrowserContent = temp.querySelector(".browser table tbody");
-                            BrowserContent.innerHTML = newBrowserContent.innerHTML;
+                            if (BrowserContent !== null) {
+                                var newBrowserContent = temp.querySelector(".browser table tbody");
+                                BrowserContent.innerHTML = newBrowserContent.innerHTML;
+                            } else {
+                                var newBrowserContent = temp.querySelector(".browser");
+                                Browser.innerHTML = newBrowserContent.innerHTML;
+                            }
                         });
                 });
         }
