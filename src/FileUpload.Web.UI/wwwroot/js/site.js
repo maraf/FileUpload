@@ -144,6 +144,7 @@ function Initialize() {
         else {
             SelectButton.removeAttribute("disabled");
             Form.reset();
+            ReloadBrowser();
         }
     }
 
@@ -236,6 +237,8 @@ function Initialize() {
         BrowserContent = Browser.querySelector("table tbody");
 
         var reloadButton = Browser.querySelector(".reload-button");
-        reloadButton.addEventListener('click', ReloadBrowser, false);
+        if (reloadButton !== null) {
+            reloadButton.addEventListener('click', ReloadBrowser, false);
+        }
     }
 }
