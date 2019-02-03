@@ -46,12 +46,13 @@ namespace FileUpload.Controllers
 
         [Route("browse")]
         [HttpGet]
-        public IActionResult Browse()
+        public IActionResult Browse(bool noLayout)
         {
             BrowseViewModel model = factory.CreateBrowser();
             if (model == null)
                 return NotFound();
 
+            ViewData["IsLayoutAllowed"] = !noLayout;
             return View(model);
         }
 

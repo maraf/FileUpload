@@ -41,5 +41,7 @@ namespace FileUpload.Services
         public string Download() => GetActionUrl("index");
 
         public string Upload() => GetActionUrl("upload");
+
+        public string Browse(bool noLayout) => GetActionUrl("browse") + (noLayout ? "?noLayout=true" : String.Empty);
     }
 }

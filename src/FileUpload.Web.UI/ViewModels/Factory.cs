@@ -35,7 +35,7 @@ namespace FileUpload.ViewModels
             if (files == null)
                 return null;
 
-            return new BrowseViewModel(files, urlBuilder.Index(), configuration.IsDownloadEnabled, configuration.IsDeleteEnabled);
+            return new BrowseViewModel(files, urlBuilder.Index(), urlBuilder.Browse(noLayout: true), configuration.IsDownloadEnabled, configuration.IsDeleteEnabled);
         }
 
         public UploadViewModel CreateUpload()

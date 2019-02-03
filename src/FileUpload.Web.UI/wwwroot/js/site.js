@@ -54,6 +54,26 @@ function Initialize() {
     var CurrentFiles = [];
     var CurrentFileIndex = -1;
 
+    var Browser;
+    var BrowserContent;
+
+    function ReloadBrowser() {
+        if (Browser !== null) {
+            var url = Browser.dataset['reloadUrl'];
+            fetch(url)
+                .then(function (response) {
+                    response.text()
+                        .then(function (body) {
+                            var temp = document.createElement("div");
+                            temp.innerHTML = body;
+
+                            var newBrowserContent = temp.querySelector(".browser table tbody");
+                            BrowserContent.innerHTML = newBrowserContent.innerHTML;
+                        });
+                });
+        }
+    }
+
     function RenderFiles() {
         var content = "";
         for (var i = 0; i < CurrentFiles.length; i++) {
@@ -209,4 +229,13 @@ function Initialize() {
     }
 
     Container.style.display = 'block';
+
+
+    Browser = document.querySelector(".browser");
+    if (Browser !== null) {
+        BrowserContent = Browser.querySelector("table tbody");
+
+        var reloadButton = Browser.querySelector(".reload-button");
+        reloadButton.addEventListener('click', ReloadBrowser, false);
+    }
 }
