@@ -24,12 +24,8 @@ namespace FileUpload.Services
 
             List<FileModel> files = Directory
                 .EnumerateFiles(configuration.StoragePath)
-                .Where(f => configuration.SupportedExtensions.Contains(Path.GetExtension(f).ToLowerInvariant()))
-                .Select(f =>
-                {
-                    var fileInfo = new FileInfo(f);
-                    return new FileModel(Path.GetFileName(f), fileInfo.Length, fileInfo.LastWriteTime);
-                })
+                .Where(f => configuration.IsSupportedExtension(Path.GetExtension(f).ToLowerInvariant()))
+                .Select(f => new FileModel(new FileInfo(f)))
                 .OrderBy(f => f.Name)
                 .ToList();
 
@@ -52,7 +48,7 @@ namespace FileUpload.Services
                 return null;
 
             extension = extension.ToLowerInvariant();
-            if (!configuration.SupportedExtensions.Contains(extension))
+            if (!configuration.IsSupportedExtension(extension))
                 return null;
 
             string filePath = Path.Combine(configuration.StoragePath, fileName);
@@ -84,7 +80,7 @@ namespace FileUpload.Services
                 return false;
 
             extension = extension.ToLowerInvariant();
-            if (!configuration.SupportedExtensions.Contains(extension))
+            if (!configuration.IsSupportedExtension(extension))
                 return false;
 
             DirectoryInfo directory = new DirectoryInfo(configuration.StoragePath);
@@ -159,7 +155,7 @@ namespace FileUpload.Services
                 return false;
 
             string extension = Path.GetExtension(fileName)?.ToLowerInvariant();
-            if (!configuration.SupportedExtensions.Contains(extension))
+            if (!configuration.IsSupportedExtension(extension))
                 return false;
 
             if (!Directory.Exists(configuration.StoragePath))

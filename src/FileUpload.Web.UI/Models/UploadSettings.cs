@@ -20,5 +20,13 @@ namespace FileUpload.Models
         public bool IsListed { get; set; }
         public string BackupTemplate { get; set; }
         public List<string> Roles { get; set; }
+
+        public bool IsSupportedExtension(string extension)
+        {
+            if (SupportedExtensions == null || SupportedExtensions.Count == 0)
+                return true;
+
+            return SupportedExtensions.Contains(extension);
+        }
     }
 }

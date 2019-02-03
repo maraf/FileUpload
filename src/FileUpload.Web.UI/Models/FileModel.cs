@@ -1,6 +1,7 @@
 ﻿using Neptuo;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,5 +22,9 @@ namespace FileUpload.Models
             Size = size;
             ModifiedAt = modifiedAt;
         }
+
+        public FileModel(FileInfo fileInfo)
+            : this(fileInfo.Name, fileInfo.Length, fileInfo.LastWriteTime)
+        { }
     }
 }
