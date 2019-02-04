@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width; initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>@ViewData["Title"] - File Manager</title>
 
-    <environment include="Development">
+    <environment names="Development">
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="~/css/site.min.css" />
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
 <body>
@@ -17,10 +17,10 @@
 
     @RenderBody()
 
-    <environment include="Development">
+    <environment names="Development">
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
-    <environment exclude="Development">
+    <environment names="Staging,Production">
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
