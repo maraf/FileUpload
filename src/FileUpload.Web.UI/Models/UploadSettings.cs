@@ -1,5 +1,4 @@
-﻿using Neptuo.Text.Tokens;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +19,8 @@ namespace FileUpload.Models
         public bool IsListed { get; set; }
         public string BackupTemplate { get; set; }
         public List<string> Roles { get; set; }
+
+        public string DateTimeFormat { get; set; }
 
         public bool IsSupportedExtension(string extension)
         {
