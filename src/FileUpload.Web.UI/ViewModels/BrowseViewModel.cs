@@ -47,5 +47,7 @@ namespace FileUpload.ViewModels
 
             return dateTime.ToString(dateTimeFormat);
         }
+
+        public string FormatSize(long size) => Math.Max(1, Math.Round((decimal)size / 1000, MidpointRounding.AwayFromZero)).ToString("N0");
     }
 }

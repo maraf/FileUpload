@@ -29,7 +29,7 @@
                         }
                     </td>
                     <td class="file-size">
-                        @(Math.Max(1, Math.Round(((decimal)file.Size / 1000), MidpointRounding.AwayFromZero)).ToString("N0")) KB
+                        @Model.FormatSize(file.Size) KB
                     </td>
                     <td class="file-modifiedat">
                         @Model.Format(file.ModifiedAt)
