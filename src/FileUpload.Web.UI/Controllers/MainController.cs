@@ -39,10 +39,7 @@ namespace FileUpload.Controllers
             => "v" + typeof(UploadOptions).Assembly.GetName().Version.ToString(3);
 
         [Route("")]
-        public IActionResult Index()
-        {
-            return base.View(new IndexViewModel(GetAppVersion(), factory.CreateUpload(), factory.CreateBrowser()));
-        }
+        public IActionResult Index() => View(new IndexViewModel(GetAppVersion(), factory.CreateUpload(), factory.CreateBrowser()));
 
         [Route("browse")]
         [HttpGet]
