@@ -37,7 +37,7 @@
                     @if (Model.IsDeleteEnabled)
                     {
                         <td class="file-delete">
-                            <form asp-action="Delete" method="post">
+                            <form action="@Model.DeleteUrl" method="post">
                                 <input type="hidden" name="FileName" value="@file.Name" />
                                 <button title="Delete File">X</button>
                             </form>

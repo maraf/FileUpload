@@ -13,21 +13,24 @@ namespace FileUpload.ViewModels
         private readonly string downloadUrl;
         private readonly string dateTimeFormat;
 
+        public string DeleteUrl { get; }
         public string ReloadUrl { get; }
 
         public IReadOnlyList<FileModel> Files { get; }
         public bool IsDownloadEnabled { get; }
         public bool IsDeleteEnabled { get; }
 
-        public BrowseViewModel(IReadOnlyList<FileModel> files, string downloadUrl, string reloadUrl, bool isDownloadEnabled, bool isDeleteEnabled, string dateTimeFormat)
+        public BrowseViewModel(IReadOnlyList<FileModel> files, string downloadUrl, string reloadUrl, string deleteUrl, bool isDownloadEnabled, bool isDeleteEnabled, string dateTimeFormat)
         {
             Ensure.NotNull(files, "files");
             Ensure.NotNull(downloadUrl, "downloadUrl");
+            Ensure.NotNull(deleteUrl, "deleteUrl");
             Ensure.NotNull(reloadUrl, "reloadUrl");
             Files = files;
             IsDownloadEnabled = isDownloadEnabled;
             IsDeleteEnabled = isDeleteEnabled;
             ReloadUrl = reloadUrl;
+            DeleteUrl = deleteUrl;
             this.downloadUrl = downloadUrl;
             this.dateTimeFormat = dateTimeFormat;
         }
@@ -39,6 +42,8 @@ namespace FileUpload.ViewModels
             else
                 return downloadUrl + '/' + file.Name;
         }
+
+        public string GetDeleteUrl() => DeleteUrl;
 
         public string Format(DateTime dateTime)
         {

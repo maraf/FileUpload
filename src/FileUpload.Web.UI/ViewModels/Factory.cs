@@ -39,6 +39,7 @@ namespace FileUpload.ViewModels
                 files, 
                 urlBuilder.Index(), 
                 urlBuilder.Browse(noLayout: true), 
+                urlBuilder.Delete(),
                 configuration.IsDownloadEnabled, 
                 configuration.IsDeleteEnabled, 
                 configuration.DateTimeFormat

@@ -38,6 +38,8 @@ namespace FileUpload.Services
 
         public string Index() => GetActionUrl("index");
 
+        public string Delete() => GetActionUrl("delete");
+
         public string Download() => GetActionUrl("index");
 
         public string Upload() => GetActionUrl("upload");
