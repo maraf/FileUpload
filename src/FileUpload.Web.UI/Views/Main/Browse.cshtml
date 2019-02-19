@@ -1,10 +1,5 @@
-﻿@model  BrowseViewModel
+﻿@model BrowseViewModel
 @{ 
-    if (!((bool?)ViewData["IsLayoutAllowed"] ?? true))
-    {
-        Layout = null;
-    }
-
     ViewData["Title"] = "Browser";
 }
 

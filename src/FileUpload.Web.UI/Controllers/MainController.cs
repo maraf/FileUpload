@@ -49,8 +49,10 @@ namespace FileUpload.Controllers
             if (model == null)
                 return NotFound();
 
-            ViewData["IsLayoutAllowed"] = !noLayout;
-            return View(model);
+            if (noLayout)
+                return PartialView("_Browser", model);
+            else
+                return View(model);
         }
 
         [Route("upload")]
