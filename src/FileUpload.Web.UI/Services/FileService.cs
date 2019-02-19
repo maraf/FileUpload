@@ -62,7 +62,7 @@ namespace FileUpload.Services
                 else if (extension == ".jpg" || extension == ".jpeg")
                     contentType = "image/jpg";
 
-                return (new FileStream(filePath, FileMode.Open), contentType);
+                return (new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read), contentType);
             }
 
             return null;
@@ -104,7 +104,7 @@ namespace FileUpload.Services
                 }
             }
 
-            using (Stream fileContent = new FileStream(filePath, FileMode.OpenOrCreate))
+            using (Stream fileContent = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write))
                 await content.CopyToAsync(fileContent);
 
             return true;
