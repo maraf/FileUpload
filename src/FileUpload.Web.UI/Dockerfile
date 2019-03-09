@@ -13,4 +13,5 @@ RUN dotnet publish -c Release -r linux-arm -o /app
 FROM microsoft/dotnet:2.2.1-aspnetcore-runtime-stretch-slim-arm32v7
 WORKDIR /app
 COPY --from=build /app .
+COPY ./appsettings.Docker.json appsettings.Production.json
 ENTRYPOINT ["dotnet", "FileUpload.Web.UI.dll"]
