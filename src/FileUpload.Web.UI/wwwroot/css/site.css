@@ -101,6 +101,8 @@ body {
     border-bottom: 1px solid #686868; }
   .browser table tr:nth-child(2n + 1) td {
     background: #f8f8f8; }
+  .browser table tr:hover td {
+    background: #FFFFA5; }
 
 .browser .file-name {
   min-width: 194px; }
@@ -157,28 +159,25 @@ body {
   .browser .file-size {
     display: none; } }
 
-@media (max-width: 430px) {
-  .draggable .container {
-    width: 200px;
-    margin: 10px auto; } }
+@media (max-width: 470px) {
+  .browser .file-modifiedat {
+    display: none; } }
 
-@media (max-width: 340px) {
+@media (max-width: 720px) {
   body {
     min-width: 220px;
     margin: 0;
     padding: 0; }
-  .draggable .container {
+  .container {
     width: auto;
     margin: 0;
     padding: 10px;
     border: none; }
-    .draggable .container h1 {
+    .container h1 {
       font-size: 1.5em;
       margin-bottom: 0; }
-    .draggable .container p {
-      margin: 0.5em 0; } }
-
-@media (max-width: 220px) {
+    .container p {
+      margin: 0.5em 0; }
   .version {
     position: static;
     bottom: auto;

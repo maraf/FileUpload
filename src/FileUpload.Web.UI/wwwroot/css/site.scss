@@ -153,6 +153,10 @@ body {
         tr:nth-child(2n + 1) td {
             background: #f8f8f8;
         }
+
+        tr:hover td {
+            background: #FFFFA5;
+        }
     }
 
     .file-name {

@@ -5,20 +5,18 @@
             display: none;
         }
     }
-
 }
 
-@media (max-width: 430px) {
+@media (max-width: 470px) {
 
-    .draggable {
-        .container {
-            width: 200px;
-            margin: 10px auto;
+    .browser {
+        .file-modifiedat {
+            display: none;
         }
     }
 }
 
-@media (max-width: 340px) {
+@media (max-width: 720px) {
 
     body {
         min-width: 220px;
@@ -26,26 +24,22 @@
         padding: 0;
     }
 
-    .draggable {
-        .container {
-            width: auto;
-            margin: 0;
-            padding: 10px;
-            border: none;
+    .container {
+        width: auto;
+        margin: 0;
+        padding: 10px;
+        border: none;
 
-            h1 {
-                font-size: 1.5em;
-                margin-bottom: 0;
-            }
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 0;
+        }
 
-            p {
-                margin: 0.5em 0;
-            }
+        p {
+            margin: 0.5em 0;
         }
     }
-}
 
-@media (max-width: 220px) {
     .version {
         position: static;
         bottom: auto;
